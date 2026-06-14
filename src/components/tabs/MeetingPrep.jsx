@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles, Calendar, ArrowRight, BookOpen, ExternalLink, Info, CheckCircle2 } from 'lucide-react';
+import { Sparkles, Calendar, ArrowRight, BookOpen, ExternalLink, Info, CheckCircle2, AlertTriangle, MapPin, Target, User } from 'lucide-react';
 
 export default function MeetingPrep() {
   const [hoveredId, setHoveredId] = useState(null);
@@ -67,16 +67,44 @@ export default function MeetingPrep() {
       {/* Day-Before Preparation Header */}
       <div className="prep-header-card">
         <div className="prep-header-meta">
-          <span className="prep-pill">NEXT MEETING</span>
+          <span className="prep-pill">🚨 NEXT MEETING: IN 18 HOURS</span>
           <span className="prep-date">
-            <Calendar size={14} style={{ marginRight: '4px' }} />
-            Tomorrow at 2:00 PM • Hospital General Clinic
+            <MapPin size={14} style={{ marginRight: '4px' }} /> Location: Hospital General Clinic, Oncology Dept.
+          </span>
+          <span className="prep-date">
+            <Calendar size={14} style={{ marginRight: '4px' }} /> Time: Tomorrow, 2:00 PM (45 mins)
           </span>
         </div>
-        <h1 className="prep-header-title">Day-Before Preparation: Dr. Sarah Chen</h1>
-        <p className="prep-header-desc">
-          Synthesized strategic brief designed to optimize engagement and present high-priority clinical trial/safety updates.
-        </p>
+        
+        <h1 className="prep-header-title">Dr. Sarah Chen</h1>
+        
+        <div className="prep-objective-box">
+          <div className="objective-row">
+            <Target size={16} className="objective-icon" />
+            <div>
+              <strong>Strategic Objective:</strong> Address Dr. Chen's recent shift in prescribing habits toward <strong>Enhertu</strong>. Re-contextualize Enhertu's recent clinical data by highlighting our drug's superior Overall Survival (OS) tail and lower toxicity profile to regain trial enrollment momentum.
+            </div>
+          </div>
+          <div className="objective-row mt-sm">
+            <User size={16} className="objective-icon" />
+            <div>
+              <strong>Engagement Style:</strong> Highly data-driven, expects concise executive summaries. Prefers charts over text.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Competitive Intelligence Panel */}
+      <div className="competitive-intelligence-panel">
+        <div className="ci-header">
+          <AlertTriangle size={18} className="ci-icon" />
+          <h3>COMPETITIVE INTELLIGENCE: Enhertu (Competitor)</h3>
+        </div>
+        <div className="ci-content">
+          <p><strong>The Situation:</strong> At the recent medical congress, Enhertu presented updated Progression-Free Survival (PFS) data showing a 1.2-month advantage over the standard of care. Claims data indicates Dr. Chen has initiated 3 new patients on Enhertu in the past month.</p>
+          <p><strong>The Vulnerability:</strong> Enhertu's Grade 3+ ILD (Interstitial Lung Disease) rates were significantly higher (15% vs our 4%).</p>
+          <p><strong>Actionable Strategy:</strong> Do not engage in a direct PFS debate. Pivot the conversation to long-term Overall Survival (OS) and Quality of Life (QoL) metrics, focusing on the ILD safety profile which aligns with Dr. Chen's known patient-centric approach.</p>
+        </div>
       </div>
 
       {/* Contextually Relevant Alert Banner */}

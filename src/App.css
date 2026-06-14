@@ -397,6 +397,70 @@
   line-height: 1.5;
 }
 
+.prep-objective-box {
+  background-color: var(--bg-workspace);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.objective-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+  color: var(--text-main);
+  line-height: 1.5;
+}
+
+.objective-row.mt-sm {
+  margin-top: 0.75rem;
+}
+
+.objective-icon {
+  color: var(--primary);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Competitive Intelligence Panel */
+.competitive-intelligence-panel {
+  background: linear-gradient(to right, #fff5f5, #fff1f2);
+  border: 1px solid #fecdd3;
+  border-left: 5px solid #e11d48;
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.75rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.ci-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #be123c;
+  margin-bottom: 0.75rem;
+}
+
+.ci-header h3 {
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+.ci-content p {
+  font-size: 0.85rem;
+  color: #881337;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+
+.ci-content p:last-child {
+  margin-bottom: 0;
+}
+
 /* Contextual Banner */
 .context-alert-banner {
   background: linear-gradient(to right, #fffdf5, #fffbeb);
