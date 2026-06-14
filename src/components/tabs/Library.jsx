@@ -1,7 +1,8 @@
-import React from 'react';
-import { BookOpen, Quote, ExternalLink, Calendar, FileText, Download, Eye, Award } from 'lucide-react';
+import React, { useState } from 'react';
+import { BookOpen, Quote, ExternalLink, Calendar, FileText, Download, Eye, Award, Cpu, ArrowRight, X, PlusCircle } from 'lucide-react';
 
 export default function Library() {
+  const [showSlidePreview, setShowSlidePreview] = useState(false);
   const metrics = [
     { label: 'Total Publications', value: '134', bg: '#eff6ff', color: '#1e40af', labelColor: '#3b82f6' },
     { label: 'Total Citations', value: '2,847', bg: '#ecfdf5', color: '#065f46', labelColor: '#10b981' },
@@ -96,6 +97,42 @@ export default function Library() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', animation: 'fadeIn 0.25s ease-out' }}>
       
+      {/* AI Predictive Content Recommender */}
+      <div className="ai-predictive-banner">
+        <div className="ai-banner-header">
+          <Cpu className="ai-icon" size={20} />
+          <h3>AI Predictive Content Recommender</h3>
+          <span className="ai-badge">High Confidence (88%)</span>
+        </div>
+        <p className="ai-banner-context">
+          <strong>Analysis:</strong> Based on Dr. Chen's recent paper on "Biomarker-Driven Treatment Selection" and the active <em>Enhertu</em> competitive scenario, she is highly likely to request specific data on managing ILD safely in HER2-low cohorts.
+        </p>
+        <div className="ai-recommendations">
+          <div className="ai-rec-card">
+            <div className="ai-rec-meta">
+              <span className="ai-rec-type">Slide Deck</span>
+              <span className="ai-rec-slide">Jump to Slide 12</span>
+            </div>
+            <h4>Enhertu Phase III Safety Updates</h4>
+            <p>Direct comparison of Grade 3+ ILD rates vs standard of care.</p>
+            <button className="btn-ai-action" onClick={() => setShowSlidePreview(true)}>
+              <Eye size={14} /> Preview Slide
+            </button>
+          </div>
+          <div className="ai-rec-card">
+            <div className="ai-rec-meta">
+              <span className="ai-rec-type">Clinical Reprint</span>
+              <span className="ai-rec-slide">Page 4 Highlight</span>
+            </div>
+            <h4>Biomarker Predictors for Toxicity</h4>
+            <p>New RWE data on identifying high-risk patients before treatment.</p>
+            <button className="btn-ai-action">
+              <ArrowRight size={14} /> Send via Vault
+            </button>
+          </div>
+        </div>
+      </div>
+
       {/* Top section: Metrics & Trends */}
       <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '1.5rem' }}>
         
@@ -300,6 +337,45 @@ export default function Library() {
         </div>
 
       </div>
+
+      {/* Slide Preview Modal */}
+      {showSlidePreview && (
+        <div className="slide-modal-overlay" onClick={() => setShowSlidePreview(false)}>
+          <div className="slide-modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="slide-modal-header">
+              <h3>Slide Preview: Phase III Safety Updates</h3>
+              <button className="slide-modal-close" onClick={() => setShowSlidePreview(false)}>
+                <X size={20} />
+              </button>
+            </div>
+            
+            <div className="slide-modal-body">
+              <div className="slide-image-container">
+                <img src="/enhertu_ild_slide.png" alt="Enhertu ILD Safety Slide" className="slide-image" />
+              </div>
+              
+              <div className="slide-meta-sidebar">
+                <div className="mlr-badge">MLR APPROVED: V3.2</div>
+                
+                <div className="talk-track-section">
+                  <h4>Approved Talk Track</h4>
+                  <p>
+                    "Median time to onset of ILD was 5.4 months. Please note that 80% of all reported cases were Grade 1 or 2, and were successfully resolved or mitigated with early corticosteroid intervention."
+                  </p>
+                </div>
+                
+                <div className="compliance-warning">
+                  <strong>Compliance Note:</strong> Do not guarantee complete reversibility of Grade 3+ ILD.
+                </div>
+                
+                <button className="btn-add-briefcase">
+                  <PlusCircle size={16} /> Add to Dr. Chen's Briefcase
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );
