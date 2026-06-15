@@ -8,25 +8,25 @@ export default function MeetingPrep() {
     {
       id: 'tp1',
       sourceId: 'src1',
-      title: 'Address Caution on IO Re-challenge with RWE Study',
-      description: 'Dr. Chen is highly cautious about immunotherapy re-challenge post-discontinuation due to high toxicity concerns from 2025 WCLC reports. Present the newer, positive Real-World Evidence (RWE) study showing that toxicity is manageable with early intervention.',
-      action: 'Share RWE study reprint and review safety timelines.',
+      title: 'Address Caution on IO Re-challenge',
+      description: '• Cautious about immunotherapy re-challenge post-toxicity.\n• Present new RWE study: 82% safety compliance with early intervention.',
+      action: 'Share RWE study reprint & review safety timelines.',
       iconColor: '#ef4444'
     },
     {
       id: 'tp2',
       sourceId: 'src2',
-      title: 'Extend Speaking Invitation for October ADC Roundtable',
-      description: 'At a recent advisory board, Dr. Chen emphasized that standardizing pneumonitis grading systems is critical. Invite her to lead/speak at the upcoming ADC ILD Grading Roundtable in October.',
+      title: 'October ADC Roundtable Invitation',
+      description: '• She emphasized standardizing pneumonitis grading at recent ad-board.\n• Invite her to lead/speak at the upcoming ADC ILD Grading Roundtable.',
       action: 'Offer panel speaker slot & confirm availability.',
       iconColor: '#3b82f6'
     },
     {
       id: 'tp3',
       sourceId: 'src3',
-      title: 'Resolve Investigator Site Enrollment Bottlenecks',
-      description: 'Dr. Chen’s clinic has low accrual in the active ADC trial. The site coordinator reported screening bottlenecks due to previous protocol exclusion criteria for prior IO treatment.',
-      action: 'Clarify current protocol updates allowing prior IO.',
+      title: 'Resolve Trial Enrollment Bottleneck',
+      description: '• Low accrual due to previous exclusion criteria for prior IO.\n• Protocol amendment V3 now allows prior IO (window shortened to 6 months).',
+      action: 'Clarify protocol updates & verify IRB status.',
       iconColor: '#f59e0b'
     }
   ];
@@ -38,8 +38,8 @@ export default function MeetingPrep() {
       type: 'CONFERENCE EXPOSURE',
       title: 'WCLC 2025 Chair Session Notes',
       date: 'September 2025',
-      quote: '"We saw three separate studies showing severe immune-related adverse events during immunotherapy re-challenge. Without clear safety guidelines, clinicians will remain hesitant to re-introduce IO agents post-toxicity."',
-      sourceMeta: 'Chaired by Dr. Sarah Chen. Note: Recent RWE studies showing 82% safety compliance were not included in her session.'
+      quote: '"Clinicians remain hesitant to re-introduce IO agents post-toxicity without clear guidelines."',
+      sourceMeta: 'Chaired by Dr. Chen. Note: Recent positive RWE safety data was not included in her session.'
     },
     {
       id: 'src2',
@@ -47,8 +47,8 @@ export default function MeetingPrep() {
       type: 'ROUNDTABLE LOG',
       title: 'ADC Safety Roundtable Discussion',
       date: 'May 10, 2026',
-      quote: '"We need to align on grading. Grade 3 pneumonitis in clinical practice is often managed differently than in clinical trial templates, causing unnecessary trial discontinuations. Early detection must be standardized."',
-      sourceMeta: 'Recorded by Elena Rostova (MSL). Dr. Chen expressed strong advocacy for standardized steroid guidelines.'
+      quote: '"We need to align on grading. Early detection must be standardized to prevent unnecessary trial discontinuations."',
+      sourceMeta: 'Recorded by MSL. Dr. Chen is a strong advocate for standardized steroid guidelines.'
     },
     {
       id: 'src3',
@@ -56,8 +56,8 @@ export default function MeetingPrep() {
       type: 'CLINICAL OPERATIONS',
       title: 'Site Accrual Bottleneck Report',
       date: 'April 2026',
-      quote: '"Dr. Chen’s team noted that the previous 12-month exclusion criteria on prior adjuvant IO disqualified 4 of their eligible patients last month, unaware that amendment V3 has shortened this window to 6 months."',
-      sourceMeta: 'Reported by Study Coordinator. Amendment V3 was approved by IRB last quarter.'
+      quote: '"Previous 12-month exclusion criteria disqualified 4 eligible patients. They are unaware of amendment V3."',
+      sourceMeta: 'Reported by Study Coordinator. Amendment V3 approved by IRB last quarter.'
     }
   ];
 
@@ -82,28 +82,19 @@ export default function MeetingPrep() {
           <div className="objective-row">
             <Target size={16} className="objective-icon" />
             <div>
-              <strong>Strategic Objective:</strong> Address Dr. Chen's recent shift in prescribing habits toward <strong>Enhertu</strong>. Re-contextualize Enhertu's recent clinical data by highlighting our drug's superior Overall Survival (OS) tail and lower toxicity profile to regain trial enrollment momentum.
+              <strong>Goal for this Meeting:</strong> Win back trial enrollment momentum from Enhertu.
+              <ul style={{ margin: '4px 0 0 20px', padding: 0 }}>
+                <li><strong>The Issue:</strong> Recent shift toward prescribing Enhertu.</li>
+                <li><strong>The Focus:</strong> Highlight our drug's better Overall Survival (OS) and lower toxicity.</li>
+              </ul>
             </div>
           </div>
           <div className="objective-row mt-sm">
             <User size={16} className="objective-icon" />
             <div>
-              <strong>Engagement Style:</strong> Highly data-driven, expects concise executive summaries. Prefers charts over text.
+              <strong>Communication Style:</strong> Highly data-driven, expects concise executive summaries. Prefers charts over text.
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Competitive Intelligence Panel */}
-      <div className="competitive-intelligence-panel">
-        <div className="ci-header">
-          <AlertTriangle size={18} className="ci-icon" />
-          <h3>COMPETITIVE INTELLIGENCE: Enhertu (Competitor)</h3>
-        </div>
-        <div className="ci-content">
-          <p><strong>The Situation:</strong> At the recent medical congress, Enhertu presented updated Progression-Free Survival (PFS) data showing a 1.2-month advantage over the standard of care. Claims data indicates Dr. Chen has initiated 3 new patients on Enhertu in the past month.</p>
-          <p><strong>The Vulnerability:</strong> Enhertu's Grade 3+ ILD (Interstitial Lung Disease) rates were significantly higher (15% vs our 4%).</p>
-          <p><strong>Actionable Strategy:</strong> Do not engage in a direct PFS debate. Pivot the conversation to long-term Overall Survival (OS) and Quality of Life (QoL) metrics, focusing on the ILD safety profile which aligns with Dr. Chen's known patient-centric approach.</p>
         </div>
       </div>
 
@@ -120,7 +111,7 @@ export default function MeetingPrep() {
         </div>
       </div>
 
-      {/* 2-Column Split Workspace */}
+      {/* 2-Column Split Workspace (MOVED UP) */}
       <div className="prep-split-grid">
         
         {/* Left Column: Talking Points */}
@@ -143,7 +134,7 @@ export default function MeetingPrep() {
                 </div>
                 <div className="tp-content">
                   <h3 className="tp-title">{tp.title}</h3>
-                  <p className="tp-desc">{tp.description}</p>
+                  <div className="tp-desc" style={{ whiteSpace: 'pre-wrap' }}>{tp.description}</div>
                   
                   {/* Action box */}
                   <div className="tp-action-box">
@@ -225,6 +216,27 @@ export default function MeetingPrep() {
             <span className="checkbox-custom"></span>
             <span className="checklist-text">Print ILD Grading Protocol sheets</span>
           </label>
+        </div>
+      </div>
+
+      {/* Competitive Intelligence Panel (MOVED DOWN) */}
+      <div className="competitive-intelligence-panel">
+        <div className="ci-header">
+          <AlertTriangle size={18} className="ci-icon" />
+          <h3>COMPETITIVE INTELLIGENCE: Enhertu (Competitor)</h3>
+        </div>
+        <div className="ci-content">
+          <ul style={{ margin: 0, paddingLeft: '20px' }}>
+            <li style={{ marginBottom: '8px' }}>
+              <strong>Background:</strong> At the recent congress, Enhertu presented updated data showing a 1.2-month PFS advantage. Claims show Dr. Chen started 3 new patients on it last month.
+            </li>
+            <li style={{ marginBottom: '8px' }}>
+              <strong>Competitor Weakness:</strong> Enhertu's Grade 3+ ILD (lung toxicity) rates were 15% (vs our 4%).
+            </li>
+            <li>
+              <strong>Our Approach:</strong> Avoid direct PFS debate. Pivot to long-term Overall Survival (OS) and patient safety (ILD rates), which aligns with Dr. Chen's patient-centric style.
+            </li>
+          </ul>
         </div>
       </div>
 
