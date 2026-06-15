@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { BookOpen, Quote, ExternalLink, Calendar, FileText, Download, Eye, Award, Cpu, ArrowRight, X, PlusCircle } from 'lucide-react';
 
-export default function Library() {
-  const [showSlidePreview, setShowSlidePreview] = useState(false);
+export default function Library({ onViewSlide }) {
   const metrics = [
     { label: 'Total Publications', value: '134', bg: '#eff6ff', color: '#1e40af', labelColor: '#3b82f6' },
     { label: 'Total Citations', value: '2,847', bg: '#ecfdf5', color: '#065f46', labelColor: '#10b981' },
@@ -115,7 +114,7 @@ export default function Library() {
             </div>
             <h4>Enhertu Phase III Safety Updates</h4>
             <p>Direct comparison of Grade 3+ ILD rates vs standard of care.</p>
-            <button className="btn-ai-action" onClick={() => setShowSlidePreview(true)}>
+            <button className="btn-ai-action" onClick={onViewSlide}>
               <Eye size={14} /> Preview Slide
             </button>
           </div>
@@ -338,44 +337,7 @@ export default function Library() {
 
       </div>
 
-      {/* Slide Preview Modal */}
-      {showSlidePreview && (
-        <div className="slide-modal-overlay" onClick={() => setShowSlidePreview(false)}>
-          <div className="slide-modal-content" onClick={(e) => e.stopPropagation()}>
-            <div className="slide-modal-header">
-              <h3>Slide Preview: Phase III Safety Updates</h3>
-              <button className="slide-modal-close" onClick={() => setShowSlidePreview(false)}>
-                <X size={20} />
-              </button>
-            </div>
-            
-            <div className="slide-modal-body">
-              <div className="slide-image-container">
-                <img src="/enhertu_ild_slide.png" alt="Enhertu ILD Safety Slide" className="slide-image" />
-              </div>
-              
-              <div className="slide-meta-sidebar">
-                <div className="mlr-badge">MLR APPROVED: V3.2</div>
-                
-                <div className="talk-track-section">
-                  <h4>Approved Talk Track</h4>
-                  <p>
-                    "Median time to onset of ILD was 5.4 months. Please note that 80% of all reported cases were Grade 1 or 2, and were successfully resolved or mitigated with early corticosteroid intervention."
-                  </p>
-                </div>
-                
-                <div className="compliance-warning">
-                  <strong>Compliance Note:</strong> Do not guarantee complete reversibility of Grade 3+ ILD.
-                </div>
-                
-                <button className="btn-add-briefcase">
-                  <PlusCircle size={16} /> Add to Dr. Chen's Briefcase
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+
 
     </div>
   );
