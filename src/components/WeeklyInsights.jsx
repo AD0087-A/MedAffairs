@@ -12,12 +12,12 @@ export default function WeeklyInsights() {
   ];
 
   const kolData = [
-    { initials: 'MA', name: 'Dr. Elena Marquez', institution: 'Memorial Sloan Kettering', theme: 'Safety', count: 28, summary: 'Increasing focus on long-term safety profiles in elderly oncology patients.' },
-    { initials: 'PA', name: 'Dr. Rajesh Patel', institution: 'Mayo Clinic', theme: 'Clinical Trials', count: 24, summary: 'Active interest in combination trial design and biomarker stratification.' },
-    { initials: 'CH', name: 'Dr. Sarah Chen', institution: 'Dana-Farber Cancer Institute', theme: 'Efficacy', count: 22, summary: 'Requesting real-world efficacy data in second-line treatment populations.' },
-    { initials: 'OB', name: 'Dr. Michael O\'Brien', institution: 'Johns Hopkins', theme: 'Scientific Exchange', count: 21, summary: 'Repeated questions on mechanism of action in resistant subtypes.' },
-    { initials: 'SH', name: 'Dr. Anika Sharma', institution: 'MD Anderson', theme: 'Safety', count: 19, summary: 'Concerns around hepatic toxicity in combination regimens.' },
-    { initials: 'LI', name: 'Dr. James Liu', institution: 'Cleveland Clinic', theme: 'HEOR', count: 18, summary: 'Exploring cost-effectiveness vs SOC engagement.' }
+    { initials: 'MA', name: 'Dr. Elena Marquez', institution: 'Memorial Sloan Kettering', themes: ['Safety', 'Efficacy', 'HEOR'], count: 28, summary: 'Increasing focus on long-term safety profiles in elderly oncology patients.' },
+    { initials: 'PA', name: 'Dr. Rajesh Patel', institution: 'Mayo Clinic', themes: ['Clinical Trials', 'Scientific Exchange'], count: 24, summary: 'Active interest in combination trial design and biomarker stratification.' },
+    { initials: 'CH', name: 'Dr. Sarah Chen', institution: 'Dana-Farber Cancer Institute', themes: ['Efficacy'], count: 22, summary: 'Requesting real-world efficacy data in second-line treatment populations.' },
+    { initials: 'OB', name: 'Dr. Michael O\'Brien', institution: 'Johns Hopkins', themes: ['Scientific Exchange', 'HEOR', 'Clinical Trials', 'Safety'], count: 21, summary: 'Repeated questions on mechanism of action in resistant subtypes.' },
+    { initials: 'SH', name: 'Dr. Anika Sharma', institution: 'MD Anderson', themes: ['Safety', 'Efficacy'], count: 19, summary: 'Concerns around hepatic toxicity in combination regimens.' },
+    { initials: 'LI', name: 'Dr. James Liu', institution: 'Cleveland Clinic', themes: ['HEOR'], count: 18, summary: 'Exploring cost-effectiveness vs SOC engagement.' }
   ];
 
   const mslLeaderboard = [
@@ -188,7 +188,6 @@ export default function WeeklyInsights() {
               </thead>
               <tbody>
                 {kolData.map((kol, index) => {
-                  const colors = getThemeColor(kol.theme);
                   return (
                     <tr key={index} className="clickable-row">
                       <td>
@@ -201,9 +200,21 @@ export default function WeeklyInsights() {
                         </div>
                       </td>
                       <td>
-                        <span className="theme-pill" style={{ backgroundColor: colors.bg, color: colors.text }}>
-                          {kol.theme}
-                        </span>
+                        <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
+                          {kol.themes.slice(0, 2).map((t, idx) => {
+                            const colors = getThemeColor(t);
+                            return (
+                              <span key={idx} className="theme-pill" style={{ backgroundColor: colors.bg, color: colors.text }}>
+                                {t}
+                              </span>
+                            );
+                          })}
+                          {kol.themes.length > 2 && (
+                            <span className="theme-pill" style={{ backgroundColor: '#f1f5f9', color: '#475569' }}>
+                              +{kol.themes.length - 2}
+                            </span>
+                          )}
+                        </div>
                       </td>
                       <td className="text-center font-bold">{kol.count}</td>
                       <td className="summary-td-cell">{kol.summary}</td>

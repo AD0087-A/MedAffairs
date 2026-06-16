@@ -1,8 +1,23 @@
 import React, { useState } from 'react';
-import { Sparkles, Calendar, ArrowRight, BookOpen, ExternalLink, Info, CheckCircle2, AlertTriangle, MapPin, Target, User } from 'lucide-react';
+import { Sparkles, Calendar, ArrowRight, BookOpen, ExternalLink, Info, CheckCircle2, AlertTriangle, MapPin, Target, User, Plus } from 'lucide-react';
 
 export default function MeetingPrep() {
   const [hoveredId, setHoveredId] = useState(null);
+
+  const [checklist, setChecklist] = useState([
+    { id: 1, text: 'Print Phase III RWE Safety reprints', category: 'Clinical Data', priority: 'High', checked: true },
+    { id: 2, text: 'Review IRB site approval status for amendment V3', category: 'Clinical Ops', priority: 'High', checked: true },
+    { id: 3, text: 'Send calendar invite speaker outline for ADC Roundtable', category: 'Engagement', priority: 'Medium', checked: false },
+    { id: 4, text: 'Print ILD Grading Protocol sheets', category: 'Educational', priority: 'Low', checked: false },
+  ]);
+  const [newItemText, setNewItemText] = useState('');
+
+  const handleAddItem = (e) => {
+    e.preventDefault();
+    if (!newItemText.trim()) return;
+    setChecklist([...checklist, { id: Date.now(), text: newItemText, category: 'Custom', priority: 'Medium', checked: false }]);
+    setNewItemText('');
+  };
 
   const talkingPoints = [
     {
@@ -191,32 +206,44 @@ export default function MeetingPrep() {
 
       {/* Preparation Checklist */}
       <div className="prep-checklist-card card">
-        <h3 className="card-title">
-          <CheckCircle2 size={18} style={{ color: 'var(--success)' }} />
-          <span>Meeting Preparation Checklist</span>
-        </h3>
-        <div className="checklist-grid">
-          <label className="checklist-item">
-            <input type="checkbox" defaultChecked />
-            <span className="checkbox-custom"></span>
-            <span className="checklist-text">Print Phase III RWE Safety reprints</span>
-          </label>
-          <label className="checklist-item">
-            <input type="checkbox" defaultChecked />
-            <span className="checkbox-custom"></span>
-            <span className="checklist-text">Review IRB site approval status for amendment V3</span>
-          </label>
-          <label className="checklist-item">
-            <input type="checkbox" />
-            <span className="checkbox-custom"></span>
-            <span className="checklist-text">Send calendar invite speaker outline for ADC Roundtable</span>
-          </label>
-          <label className="checklist-item">
-            <input type="checkbox" />
-            <span className="checkbox-custom"></span>
-            <span className="checklist-text">Print ILD Grading Protocol sheets</span>
-          </label>
+        <div className="card-header-flex">
+          <h3 className="card-title" style={{ margin: 0 }}>
+            <CheckCircle2 size={18} style={{ color: 'var(--success)' }} />
+            <span>Meeting Preparation Checklist</span>
+          </h3>
+          <span className="ai-badge" style={{ fontSize: '10px' }}><Sparkles size={10} /> AI GENERATED</span>
         </div>
+        
+        <div className="checklist-list">
+          {checklist.map((item) => (
+            <div key={item.id} className="checklist-item-row">
+              <label className="checklist-item" style={{ marginBottom: 0 }}>
+                <input 
+                  type="checkbox" 
+                  checked={item.checked} 
+                  onChange={(e) => setChecklist(checklist.map(i => i.id === item.id ? {...i, checked: e.target.checked} : i))}
+                />
+                <span className="checkbox-custom"></span>
+                <span className="checklist-text" style={{ textDecoration: item.checked ? 'line-through' : 'none', color: item.checked ? 'var(--text-muted)' : 'inherit' }}>{item.text}</span>
+              </label>
+              <div className="checklist-meta">
+                <span className="category-pill">{item.category}</span>
+                <span className={`priority-pill priority-${item.priority.toLowerCase()}`}>{item.priority}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <form onSubmit={handleAddItem} className="add-checklist-item-form">
+          <input 
+            type="text" 
+            placeholder="Add a new action item..." 
+            value={newItemText}
+            onChange={(e) => setNewItemText(e.target.value)}
+            className="add-item-input"
+          />
+          <button type="submit" className="add-item-btn"><Plus size={14} style={{ marginRight: '4px' }}/> Add Item</button>
+        </form>
       </div>
 
       {/* Competitive Intelligence Panel (MOVED DOWN) */}
