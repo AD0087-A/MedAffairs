@@ -24,6 +24,7 @@ export default function MeetingPrep() {
       id: 'tp1',
       sourceId: 'src1',
       title: 'Address Caution on IO Re-challenge',
+      priority: 'High',
       description: '• Cautious about immunotherapy re-challenge post-toxicity.\n• Present new RWE study: 82% safety compliance with early intervention.',
       action: 'Share RWE study reprint & review safety timelines.',
       iconColor: '#ef4444'
@@ -32,6 +33,7 @@ export default function MeetingPrep() {
       id: 'tp2',
       sourceId: 'src2',
       title: 'October ADC Roundtable Invitation',
+      priority: 'Low',
       description: '• She emphasized standardizing pneumonitis grading at recent ad-board.\n• Invite her to lead/speak at the upcoming ADC ILD Grading Roundtable.',
       action: 'Offer panel speaker slot & confirm availability.',
       iconColor: '#3b82f6'
@@ -40,6 +42,7 @@ export default function MeetingPrep() {
       id: 'tp3',
       sourceId: 'src3',
       title: 'Resolve Trial Enrollment Bottleneck',
+      priority: 'Medium',
       description: '• Low accrual due to previous exclusion criteria for prior IO.\n• Protocol amendment V3 now allows prior IO (window shortened to 6 months).',
       action: 'Clarify protocol updates & verify IRB status.',
       iconColor: '#f59e0b'
@@ -192,7 +195,12 @@ export default function MeetingPrep() {
                   <ArrowRight size={16} />
                 </div>
                 <div className="tp-content">
-                  <h3 className="tp-title">{tp.title}</h3>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px', marginBottom: '0.5rem' }}>
+                    <h3 className="tp-title" style={{ margin: 0 }}>{tp.title}</h3>
+                    <span className={`priority-pill priority-${tp.priority.toLowerCase()}`} style={{ flexShrink: 0 }}>
+                      {tp.priority}
+                    </span>
+                  </div>
                   <div className="tp-desc" style={{ whiteSpace: 'pre-wrap' }}>{tp.description}</div>
 
                   {/* Action box */}
