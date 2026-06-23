@@ -78,7 +78,7 @@ export default function MeetingPrep() {
 
   return (
     <div className="meeting-prep-tab" style={{ animation: 'fadeIn 0.25s ease-out' }}>
-      
+
       {/* Day-Before Preparation Header */}
       <div className="prep-header-card">
         <div className="prep-header-meta">
@@ -90,26 +90,70 @@ export default function MeetingPrep() {
             <Calendar size={14} style={{ marginRight: '4px' }} /> Time: Tomorrow, 2:00 PM (45 mins)
           </span>
         </div>
-        
-        <h1 className="prep-header-title">Dr. Sarah Chen</h1>
-        
-        <div className="prep-objective-box">
-          <div className="objective-row">
-            <Target size={16} className="objective-icon" />
-            <div>
-              <strong>Goal for this Meeting:</strong> Win back trial enrollment momentum from Enhertu.
-              <ul style={{ margin: '4px 0 0 20px', padding: 0 }}>
-                <li><strong>The Issue:</strong> Recent shift toward prescribing Enhertu.</li>
-                <li><strong>The Focus:</strong> Highlight our drug's better Overall Survival (OS) and lower toxicity.</li>
-              </ul>
-            </div>
+
+        <h1 className="prep-header-title">Dr. Chong</h1>
+
+        <div className="prep-objective-box" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', backgroundColor: 'var(--bg-card)', padding: '16px', borderRadius: '8px', border: '1px solid var(--border-light)' }}>
+          
+          {/* Left Column: Objective & Must Cover */}
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <h3 style={{ fontSize: '13px', color: 'var(--primary)', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '6px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+              <Target size={14} /> PRIMARY OBJECTIVE
+            </h3>
+            <p style={{ fontWeight: '600', fontSize: '15px', marginBottom: '16px', color: 'var(--text-heading)', lineHeight: '1.4' }}>
+              Review updated Zolimex efficacy & resolve patient access blockers.
+            </p>
+            
+            <h4 style={{ fontSize: '11px', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '8px', fontWeight: '600', letterSpacing: '0.5px' }}>What You Must Cover</h4>
+            <ul style={{ listStyleType: 'none', padding: 0, margin: 0, fontSize: '13px', display: 'flex', flexDirection: 'column', gap: '8px', color: 'var(--text-main)' }}>
+              <li style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+                <CheckCircle2 size={16} style={{ color: 'var(--success)', flexShrink: 0, marginTop: '2px' }}/> 
+                <span>Present updated <strong>comparative efficacy</strong> data vs Adverse Events.</span>
+              </li>
+              <li style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+                <CheckCircle2 size={16} style={{ color: 'var(--success)', flexShrink: 0, marginTop: '2px' }}/> 
+                <span>Highlight latest <strong>clinical evidence</strong> and differentiation.</span>
+              </li>
+              <li style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+                <CheckCircle2 size={16} style={{ color: 'var(--success)', flexShrink: 0, marginTop: '2px' }}/> 
+                <span>Provide concrete solutions/resources for <strong>patient access</strong>.</span>
+              </li>
+            </ul>
           </div>
-          <div className="objective-row mt-sm">
-            <User size={16} className="objective-icon" />
-            <div>
-              <strong>Communication Style:</strong> Highly data-driven, expects concise executive summaries. Prefers charts over text.
+
+          {/* Right Column: Context & Tactics */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            
+            <div style={{ backgroundColor: 'var(--warning-light)', border: '1px solid #fcd34d', padding: '12px', borderRadius: '6px' }}>
+              <strong style={{ fontSize: '11px', color: 'var(--warning-text)', display: 'flex', alignItems: 'center', gap: '6px', textTransform: 'uppercase', marginBottom: '4px', letterSpacing: '0.5px' }}>
+                <AlertTriangle size={14} /> Key Challenge
+              </strong>
+              <p style={{ fontSize: '12px', color: 'var(--warning-text)', margin: 0, lineHeight: '1.4', fontWeight: '500' }}>
+                Patient access concerns and ongoing questions regarding comparative efficacy & adverse event data persist despite previous engagements.
+              </p>
             </div>
+
+            <div style={{ backgroundColor: 'var(--secondary-light)', border: '1px solid #c7d2fe', padding: '12px', borderRadius: '6px' }}>
+              <strong style={{ fontSize: '11px', color: 'var(--secondary)', display: 'flex', alignItems: 'center', gap: '6px', textTransform: 'uppercase', marginBottom: '4px', letterSpacing: '0.5px' }}>
+                <User size={14} /> The Playbook
+              </strong>
+              <p style={{ fontSize: '12px', color: '#4338ca', margin: 0, lineHeight: '1.4' }}>
+                Dr. Chong prefers detailed, data-driven discussions. <strong>Bring published references</strong> and consistently provide <strong>comprehensive follow-up materials</strong>.
+              </p>
+            </div>
+
+            {/* Collapsible History */}
+            <details style={{ cursor: 'pointer', fontSize: '12px', color: 'var(--text-muted)', marginTop: 'auto', padding: '4px 0' }}>
+              <summary style={{ fontWeight: '600', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <Calendar size={14} /> View Recent Activity Summary (Apr 16)
+              </summary>
+              <div style={{ marginTop: '8px', padding: '10px', backgroundColor: '#f1f5f9', borderRadius: '4px', border: '1px solid #e2e8f0', lineHeight: '1.4' }}>
+                Previous meeting focused on Disease State & Zolimex efficacy. Received multiple fax inquiries on comparative efficacy & AEs. Advisory board in Feb discussed Advocacy & competitor differentiation. Patient access issues are repeated topics.
+              </div>
+            </details>
+
           </div>
+
         </div>
       </div>
 
@@ -128,7 +172,7 @@ export default function MeetingPrep() {
 
       {/* 2-Column Split Workspace (MOVED UP) */}
       <div className="prep-split-grid">
-        
+
         {/* Left Column: Talking Points */}
         <div className="talking-points-col">
           <h2 className="col-section-title">
@@ -138,8 +182,8 @@ export default function MeetingPrep() {
 
           <div className="talking-points-list">
             {talkingPoints.map((tp) => (
-              <div 
-                key={tp.id} 
+              <div
+                key={tp.id}
                 className={`talking-point-item ${hoveredId === tp.id || hoveredId === tp.sourceId ? 'highlighted' : ''}`}
                 onMouseEnter={() => setHoveredId(tp.id)}
                 onMouseLeave={() => setHoveredId(null)}
@@ -150,7 +194,7 @@ export default function MeetingPrep() {
                 <div className="tp-content">
                   <h3 className="tp-title">{tp.title}</h3>
                   <div className="tp-desc" style={{ whiteSpace: 'pre-wrap' }}>{tp.description}</div>
-                  
+
                   {/* Action box */}
                   <div className="tp-action-box">
                     <span className="action-tag">ACTION</span>
@@ -176,8 +220,8 @@ export default function MeetingPrep() {
 
           <div className="evidence-list">
             {sourceEvidence.map((src) => (
-              <div 
-                key={src.id} 
+              <div
+                key={src.id}
                 className={`evidence-card ${hoveredId === src.id || hoveredId === src.talkingPointId ? 'highlighted' : ''}`}
                 onMouseEnter={() => setHoveredId(src.id)}
                 onMouseLeave={() => setHoveredId(null)}
@@ -187,7 +231,7 @@ export default function MeetingPrep() {
                   <span className="src-date">{src.date}</span>
                 </div>
                 <h3 className="src-title">{src.title}</h3>
-                
+
                 <div className="src-quote-box">
                   <span className="quote-mark">“</span>
                   <p className="src-quote-text">{src.quote}</p>
@@ -213,15 +257,15 @@ export default function MeetingPrep() {
           </h3>
           <span className="ai-badge" style={{ fontSize: '10px' }}><Sparkles size={10} /> AI GENERATED</span>
         </div>
-        
+
         <div className="checklist-list">
           {checklist.map((item) => (
             <div key={item.id} className="checklist-item-row">
               <label className="checklist-item" style={{ marginBottom: 0 }}>
-                <input 
-                  type="checkbox" 
-                  checked={item.checked} 
-                  onChange={(e) => setChecklist(checklist.map(i => i.id === item.id ? {...i, checked: e.target.checked} : i))}
+                <input
+                  type="checkbox"
+                  checked={item.checked}
+                  onChange={(e) => setChecklist(checklist.map(i => i.id === item.id ? { ...i, checked: e.target.checked } : i))}
                 />
                 <span className="checkbox-custom"></span>
                 <span className="checklist-text" style={{ textDecoration: item.checked ? 'line-through' : 'none', color: item.checked ? 'var(--text-muted)' : 'inherit' }}>{item.text}</span>
@@ -235,14 +279,14 @@ export default function MeetingPrep() {
         </div>
 
         <form onSubmit={handleAddItem} className="add-checklist-item-form">
-          <input 
-            type="text" 
-            placeholder="Add a new action item..." 
+          <input
+            type="text"
+            placeholder="Add a new action item..."
             value={newItemText}
             onChange={(e) => setNewItemText(e.target.value)}
             className="add-item-input"
           />
-          <button type="submit" className="add-item-btn"><Plus size={14} style={{ marginRight: '4px' }}/> Add Item</button>
+          <button type="submit" className="add-item-btn"><Plus size={14} style={{ marginRight: '4px' }} /> Add Item</button>
         </form>
       </div>
 
