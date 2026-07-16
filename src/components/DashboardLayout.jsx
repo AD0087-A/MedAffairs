@@ -8,7 +8,7 @@ import Workspace from './Workspace';
 const WORKSPACE_TABS = ['Meeting Prep', 'Timeline', 'Library'];
 
 export default function DashboardLayout() {
-  const [activeTab, setActiveTab] = useState('brief'); // 'brief', 'weekly', 'executive'
+  const [activeTab, setActiveTab] = useState('weekly');
   const [workspaceTab, setWorkspaceTab] = useState('Meeting Prep');
 
   return (
