@@ -2422,14 +2422,14 @@
 /* KPI Cards Grid */
 .kpis-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 1rem;
   margin-bottom: 1.5rem;
 }
 
 .kpis-grid.executive {
   grid-template-columns: repeat(4, 1fr);
-  gap: 1.25rem;
+  gap: 1rem;
 }
 
 .kpi-card-box {
