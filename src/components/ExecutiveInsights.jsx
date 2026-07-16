@@ -7,10 +7,7 @@ export default function ExecutiveInsights() {
     { label: 'TOTAL INTERACTIONS', value: '5,284', change: '+14.2%', trend: 'up' },
     { label: 'KOLS ENGAGED', value: '842', change: '+6.8%', trend: 'up' },
     { label: 'INSIGHTS GENERATED', value: '1,968', change: '+22.1%', trend: 'up' },
-    { label: 'EMERGING TOPICS', value: '47', change: '+34.3%', trend: 'up' },
-    { label: 'MEDICAL INFO REQUESTS', value: '624', change: '+8.9%', trend: 'up' },
-    { label: 'SAFETY SIGNALS', value: '38', change: '+41.2%', trend: 'up' },
-    { label: 'SCIENTIFIC OPPORTUNITIES', value: '56', change: '+17.6%', trend: 'up' }
+    { label: 'THEMES', value: '47', change: '+34.3%', trend: 'up' },
   ];
 
   return (
