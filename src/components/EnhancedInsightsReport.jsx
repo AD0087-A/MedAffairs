@@ -8,6 +8,8 @@ const THEMES = [
     color: '#2563eb',
     bg: '#eff6ff',
     confidence: '88%',
+    source_count: 4,
+    kols: ['John Miller', 'Robert Johnson'],
     summary: 'Phase 3 Asia trial shows GGT elevations requiring monitoring protocol. KOL questions FBTC endpoint relevance given low baseline prevalence; planning retrospective DEE study and renal PK modeling. Recommended action: Provide GGT monitoring protocol; support research proposals.',
     narrative: 'Phase 3 Asia trial identified GGT elevations requiring active monitoring. KOL questions FBTC endpoint validity given low baseline disease prevalence in practice. Planned DEE retrospective study and renal PK modeling aim to establish dosing guidance.',
   },
@@ -17,6 +19,8 @@ const THEMES = [
     color: '#6d28d9',
     bg: '#f5f3ff',
     confidence: '90%',
+    source_count: 4,
+    kols: ['John Miller', 'Robert Johnson'],
     summary: 'Cenobamate achieves seizure freedom at 100 mg, enabling ASM reduction; insurance denial of >400 mg dosing and Medicaid 25 mg PDL gap (resolved Oct) force suboptimal workarounds. KOL documenting outcomes to support formulary expansion. Recommended action: Provide refractory dosing rationale; expedite PDL/formulary support materials.',
     narrative: 'Cenobamate demonstrates seizure freedom at 100 mg, allowing simplification from dual-ASM regimens. Access barriers—insurance denial of higher dosing and Medicaid PDL gaps—force clinical workarounds. KOL-led outcome documentation across LA County supports formulary advocacy.',
   },
@@ -74,6 +78,29 @@ export default function EnhancedInsightsReport() {
               <p style={{ margin: '12px 0 0', fontSize: '13px', color: '#334155', lineHeight: 1.6 }}>
                 {theme.summary}
               </p>
+
+              {/* Sources + KOLs */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginTop: '12px', flexWrap: 'wrap' }}>
+                <span style={{ fontSize: '12px', color: '#64748b' }}>
+                  <span style={{ fontWeight: 700, color: '#1e293b' }}>{theme.source_count}</span> sources
+                </span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
+                  <span style={{ fontSize: '12px', color: '#64748b' }}>KOLs:</span>
+                  {theme.kols.map((kol, i) => (
+                    <span key={i} style={{
+                      padding: '2px 8px',
+                      borderRadius: '10px',
+                      fontSize: '11px',
+                      fontWeight: 600,
+                      background: theme.bg,
+                      color: theme.color,
+                      border: `1px solid ${theme.color}22`,
+                    }}>
+                      {kol}
+                    </span>
+                  ))}
+                </div>
+              </div>
 
               {/* AI Narrative toggle */}
               <div className="smart-card-narrative-box" style={{ marginTop: '12px' }}>
