@@ -1,11 +1,11 @@
 import React from 'react';
-import DashboardLayout from './components/DashboardLayout';
+import AppShell from './components/AppShell';
 import './App.css';
 
 function App() {
   return (
     <div className="global-app-wrapper">
-      <DashboardLayout />
+      <AppShell />
     </div>
   );
 }
