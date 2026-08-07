@@ -79,8 +79,7 @@ export default function AppShell() {
               <span className="notif-dot">3</span>
             </button>
             <div className="header-user-badge">
-              <div className="user-avatar-badge">DR</div>
-              <span>Dr. R. Kapoor</span>
+              <span>R. Kapoor</span>
             </div>
           </div>
         </header>

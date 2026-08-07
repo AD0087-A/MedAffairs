@@ -94,7 +94,7 @@ export default function MeetingPrep() {
           </span>
         </div>
 
-        <h1 className="prep-header-title">Dr. Chong</h1>
+        <h1 className="prep-header-title">Dr. Sarah Chen</h1>
 
         <div className="prep-objective-box" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', backgroundColor: 'var(--bg-card)', padding: '16px', borderRadius: '8px', border: '1px solid var(--border-light)' }}>
           
@@ -141,7 +141,7 @@ export default function MeetingPrep() {
                 <User size={14} /> The Playbook
               </strong>
               <p style={{ fontSize: '12px', color: '#4338ca', margin: 0, lineHeight: '1.4' }}>
-                Dr. Chong prefers detailed, data-driven discussions. <strong>Bring published references</strong> and consistently provide <strong>comprehensive follow-up materials</strong>.
+                Dr. Sarah Chen prefers detailed, data-driven discussions. <strong>Bring published references</strong> and consistently provide <strong>comprehensive follow-up materials</strong>.
               </p>
             </div>
 
