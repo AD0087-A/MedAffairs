@@ -7,6 +7,7 @@ import WeeklyInsights from './WeeklyInsights';
 import ExecutiveInsights from './ExecutiveInsights';
 import AskIzoChat from './AskIzoChat';
 import HCPSegmentationPage from './pages/HCPSegmentationPage';
+import DynamicTargetingPage from './pages/DynamicTargetingPage';
 
 const WORKSPACE_TABS = ['Meeting Prep', 'Timeline', 'Library'];
 
@@ -15,6 +16,7 @@ const PAGE_LABELS = {
   weekly: 'Weekly Insights',
   executive: 'Executive Insights',
   'hcp-segmentation': 'HCP Segmentation and Targeting',
+  targeting: 'Dynamic Targeting',
 };
 
 export default function AppShell() {
@@ -46,6 +48,10 @@ export default function AppShell() {
 
     if (activePage === 'hcp-segmentation') {
       return <HCPSegmentationPage />;
+    }
+
+    if (activePage === 'targeting') {
+      return <DynamicTargetingPage />;
     }
 
     return (

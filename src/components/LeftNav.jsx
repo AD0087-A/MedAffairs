@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { User, Activity, BarChart2, Users, ChevronDown } from 'lucide-react';
+import { User, Activity, BarChart2, Users, Target, ChevronDown } from 'lucide-react';
 
 const NAV_ITEMS = [
   { key: 'brief', label: 'MSL Call Brief', icon: User },
   { key: 'weekly', label: 'Weekly Insights', icon: Activity },
   { key: 'executive', label: 'Executive Insights', icon: BarChart2 },
   { key: 'hcp-segmentation', label: 'HCP Segmentation & Targeting', icon: Users },
+  { key: 'targeting', label: 'Dynamic Targeting', icon: Target },
 ];
 
 export default function LeftNav({ activePage, onNavigate }) {
