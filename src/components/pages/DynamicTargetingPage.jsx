@@ -2,28 +2,30 @@ import React, { useState } from 'react';
 import { X } from 'lucide-react';
 
 // ── raw HCP data, exactly as it would arrive from the source tables ──────────
+// dec = M1 potential decile (category volume), m2 = M2 brand decile (our share)
 const HCPS = [
-  { id: 'H-100418', nm: 'Dr. Elena Marchetti', sp: 'Neurology, Epilepsy',         dec: 9,  loy: 'Trialist',               dcl: 'N', plan: 6, done: 1, att: 17,  ev: 'sample_request', evd: 6,  rep: 'interested',   repd: 10,  noc: 'N', pdrp: 'N' },
-  { id: 'H-100562', nm: 'Dr. Ravi Shankaran',  sp: 'Neurology, Epilepsy',         dec: 8,  loy: 'Grower',                 dcl: 'Y', plan: 6, done: 2, att: 33,  ev: 'conf',           evd: 22, rep: 'receptive',    repd: 30,  noc: 'N', pdrp: 'N' },
-  { id: 'H-100733', nm: 'Dr. Priya Anand',     sp: 'Neurology, General',          dec: 9,  loy: 'Churner',               dcl: 'Y', plan: 5, done: 3, att: 60,  ev: 'cta',            evd: 40, rep: 'neutral',      repd: 55,  noc: 'N', pdrp: 'N' },
-  { id: 'H-100811', nm: 'Dr. Thomas Okafor',   sp: 'Neurology, Epilepsy',         dec: 7,  loy: 'Non-User',              dcl: 'N', plan: 5, done: 2, att: 40,  ev: 'form',           evd: 12, rep: null,           repd: 0,   noc: 'N', pdrp: 'N' },
-  { id: 'H-100925', nm: 'Dr. Hannah Weiss',    sp: 'Neurology, General',          dec: 8,  loy: 'Grower',                dcl: 'N', plan: 4, done: 3, att: 75,  ev: 'email_click',    evd: 18, rep: 'receptive',    repd: 20,  noc: 'N', pdrp: 'N' },
-  { id: 'H-101044', nm: 'Dr. Marcus Bell',     sp: 'Neurology, Epilepsy',         dec: 10, loy: 'Established Prescriber', dcl: 'N', plan: 6, done: 5, att: 83,  ev: 'deep_visit',     evd: 60, rep: 'interested',   repd: 15,  noc: 'N', pdrp: 'N' },
-  { id: 'H-101190', nm: 'Dr. Sofia Ferreira',  sp: 'Neurology, General',          dec: 6,  loy: 'Trialist',               dcl: 'N', plan: 4, done: 1, att: 25,  ev: 'rep_visit',      evd: 3,  rep: null,           repd: 0,   noc: 'N', pdrp: 'N' },
-  { id: 'H-101276', nm: 'Dr. Daniel Kwon',     sp: 'Psychiatry, Neuropsychiatry', dec: 5,  loy: 'Non-User',              dcl: 'N', plan: 3, done: 1, att: 33,  ev: 'none',           evd: 0,  rep: 'not_now',      repd: 40,  noc: 'N', pdrp: 'N' },
-  { id: 'H-101358', nm: 'Dr. Aisha Rahman',    sp: 'Neurology, Epilepsy',         dec: 7,  loy: 'Churner',               dcl: 'Y', plan: 4, done: 4, att: 100, ev: 'download',       evd: 75, rep: 'virtual',      repd: 25,  noc: 'N', pdrp: 'N' },
-  { id: 'H-101431', nm: 'Dr. Grace Lindqvist', sp: 'Neurology, General',          dec: 4,  loy: 'Lapsed',                dcl: 'N', plan: 3, done: 2, att: 67,  ev: 'nomatch',        evd: 0,  rep: 'neutral',      repd: 200, noc: 'N', pdrp: 'N' },
-  { id: 'H-101507', nm: 'Dr. Peter Nkemdirim', sp: 'Internal Medicine',           dec: 3,  loy: 'Insufficient History',  dcl: 'N', plan: 2, done: 0, att: 0,   ev: 'none',           evd: 0,  rep: 'not_relevant', repd: 30,  noc: 'N', pdrp: 'N' },
-  { id: 'H-101688', nm: 'Dr. Laura Sandoval',  sp: 'Neurology, General',          dec: 5,  loy: 'Lapsed',                dcl: 'N', plan: 2, done: 2, att: 100, ev: 'none',           evd: 0,  rep: null,           repd: 0,   noc: 'N', pdrp: 'N' },
-  { id: 'H-101742', nm: 'Dr. Ian Fitzgerald',  sp: 'Neurology, Epilepsy',         dec: 9,  loy: 'Established Prescriber', dcl: 'Y', plan: 6, done: 2, att: 33,  ev: 'conf',           evd: 15, rep: 'interested',   repd: 12,  noc: 'Y', pdrp: 'N' },
-  { id: 'H-101890', nm: 'Dr. Nadia Petrov',    sp: 'Neurology, General',          dec: 8,  loy: 'Grower',                dcl: 'N', plan: 5, done: 2, att: 40,  ev: 'cta',            evd: 30, rep: 'receptive',    repd: 45,  noc: 'N', pdrp: 'Y' },
+  { id: 'H-100418', nm: 'Dr. Elena Marchetti', sp: 'Neurology, Epilepsy',         dec: 9,  m2: 4, loy: 'Trialist',               plan: 6, done: 1, att: 17,  ev: 'sample_request', evd: 6,  rep: 'interested',   repd: 10,  noc: 'N', pdrp: 'N' },
+  { id: 'H-100562', nm: 'Dr. Ravi Shankaran',  sp: 'Neurology, Epilepsy',         dec: 8,  m2: 6, loy: 'Grower',                 plan: 6, done: 2, att: 33,  ev: 'conf',           evd: 22, rep: 'receptive',    repd: 30,  noc: 'N', pdrp: 'N' },
+  { id: 'H-100733', nm: 'Dr. Priya Anand',     sp: 'Neurology, General',          dec: 9,  m2: 8, loy: 'Churner',               plan: 5, done: 3, att: 60,  ev: 'cta',            evd: 40, rep: 'neutral',      repd: 55,  noc: 'N', pdrp: 'N' },
+  { id: 'H-100811', nm: 'Dr. Thomas Okafor',   sp: 'Neurology, Epilepsy',         dec: 7,  m2: 3, loy: 'Non-User',              plan: 5, done: 2, att: 40,  ev: 'form',           evd: 12, rep: null,           repd: 0,   noc: 'N', pdrp: 'N' },
+  { id: 'H-100925', nm: 'Dr. Hannah Weiss',    sp: 'Neurology, General',          dec: 8,  m2: 7, loy: 'Grower',                plan: 4, done: 3, att: 75,  ev: 'email_click',    evd: 18, rep: 'receptive',    repd: 20,  noc: 'N', pdrp: 'N' },
+  { id: 'H-101044', nm: 'Dr. Marcus Bell',     sp: 'Neurology, Epilepsy',         dec: 10, m2: 9, loy: 'Established Prescriber', plan: 6, done: 5, att: 83,  ev: 'deep_visit',     evd: 60, rep: 'interested',   repd: 15,  noc: 'N', pdrp: 'N' },
+  { id: 'H-101190', nm: 'Dr. Sofia Ferreira',  sp: 'Neurology, General',          dec: 6,  m2: 5, loy: 'Trialist',               plan: 4, done: 1, att: 25,  ev: 'rep_visit',      evd: 3,  rep: null,           repd: 0,   noc: 'N', pdrp: 'N' },
+  { id: 'H-101276', nm: 'Dr. Daniel Kwon',     sp: 'Psychiatry, Neuropsychiatry', dec: 5,  m2: 2, loy: 'Non-User',              plan: 3, done: 1, att: 33,  ev: 'none',           evd: 0,  rep: 'not_now',      repd: 40,  noc: 'N', pdrp: 'N' },
+  { id: 'H-101358', nm: 'Dr. Aisha Rahman',    sp: 'Neurology, Epilepsy',         dec: 7,  m2: 9, loy: 'Churner',               plan: 4, done: 4, att: 100, ev: 'download',       evd: 75, rep: 'virtual',      repd: 25,  noc: 'N', pdrp: 'N' },
+  { id: 'H-101431', nm: 'Dr. Grace Lindqvist', sp: 'Neurology, General',          dec: 4,  m2: 3, loy: 'Lapsed',                plan: 3, done: 2, att: 67,  ev: 'nomatch',        evd: 0,  rep: 'neutral',      repd: 200, noc: 'N', pdrp: 'N' },
+  { id: 'H-101507', nm: 'Dr. Peter Nkemdirim', sp: 'Internal Medicine',           dec: 3,  m2: 1, loy: 'Insufficient History',  plan: 2, done: 0, att: 0,   ev: 'none',           evd: 0,  rep: 'not_relevant', repd: 30,  noc: 'N', pdrp: 'N' },
+  { id: 'H-101688', nm: 'Dr. Laura Sandoval',  sp: 'Neurology, General',          dec: 5,  m2: 8, loy: 'Lapsed',                plan: 2, done: 2, att: 100, ev: 'none',           evd: 0,  rep: null,           repd: 0,   noc: 'N', pdrp: 'N' },
+  { id: 'H-101742', nm: 'Dr. Ian Fitzgerald',  sp: 'Neurology, Epilepsy',         dec: 9,  m2: 8, loy: 'Established Prescriber', plan: 6, done: 2, att: 33,  ev: 'conf',           evd: 15, rep: 'interested',   repd: 12,  noc: 'Y', pdrp: 'N' },
+  { id: 'H-101890', nm: 'Dr. Nadia Petrov',    sp: 'Neurology, General',          dec: 8,  m2: 6, loy: 'Grower',                plan: 5, done: 2, att: 40,  ev: 'cta',            evd: 30, rep: 'receptive',    repd: 45,  noc: 'N', pdrp: 'Y' },
 ];
 
-// ── the six inputs ────────────────────────────────────────────────────────
-const W = { pot: 25, loy: 20, int: 20, gap: 15, mom: 10, rep: 10 };
+// ── the five inputs ───────────────────────────────────────────────────────
+const W = { pot: 25, mom: 30, int: 20, gap: 15, rep: 10 };
 
 // S2 Lifecycle Stage, taken verbatim from sheet 5 of the value mapping workbook.
-// 'Insufficient History' is null on purpose: it means fall back, not score zero.
+// Scored as Momentum. 'Insufficient History' is null on purpose: it means
+// fall back, not score zero.
 const LOY = {
   Grow:     { 'Non-User': 20, 'Trialist': 80, 'Grower': 100, 'Established Prescriber': 40,  'Churner': 30, 'Lapsed': 10,  'Insufficient History': null },
   Convert:  { 'Non-User': 90, 'Trialist': 70, 'Grower': 40,  'Established Prescriber': 10,  'Churner': 20, 'Lapsed': 40,  'Insufficient History': null },
@@ -55,17 +57,16 @@ const REP = {
 };
 
 const SRC = {
-  pot: 'VW_PRE_CALL_KPI_EXTRACT . TARGET_BRAND_NBRX_DECILE__C',
-  loy: 'VW_PRE_CALL_KPI_EXTRACT . PRODUCT_LOYALTY_SEGMENT__C',
+  pot: 'SEG_HCP_SCORE . M1_POTENTIAL_DECILE  x headroom factor from M2_BRAND_DECILE',
+  mom: 'SEG_HCP_SCORE . S2_LIFECYCLE_STAGE',
   int: 'Website_Engagement . Sample_Request_Triggered / Rep_Visit_Triggered / Form_Submitted / Call_to_Action_Clicked  +  Conference_Engagement . attended',
-  gap: 'VW_TRGT_DTL_FACT . UPDT_FREQ_NUM  minus  VW_CRM_CALL_ACTIVITY count',
-  mom: 'VW_PRE_CALL_KPI_EXTRACT . DECLINING_PRODUCT_INITIATOR__C',
-  rep: 'REP_INTERACTION_NOTE . outcome   (field does not exist yet)',
+  gap: 'VW_TRGT_DTL_FACT . UPDT_FREQ_NUM  minus  count of VW_ATVY_CALL_FACT . CALL_DT',
+  rep: 'REP_INTERACTION_NOTE . outcome   (AI classifies the note, lookup scores the label)',
 };
 
 const LBL = {
-  pot: 'Potential', loy: 'Lifecycle stage', int: 'Recent interest',
-  gap: 'Plan still owed', mom: 'Momentum', rep: 'Rep read',
+  pot: 'Potential', mom: 'Momentum', int: 'Recent interest',
+  gap: 'Plan still owed', rep: 'Rep read',
 };
 
 const OBJECTIVES = ['Grow', 'Convert', 'Recover', 'Maintain'];
@@ -74,10 +75,9 @@ const BAND_COLOR = { P1: '#166534', P2: '#92400e', P3: '#334155', P4: '#64748b',
 const BAND_BG = { P1: '#dcfce7', P2: '#fef3c7', P3: '#eef1f4', P4: '#f2f2f2', '--': '#f1f5f9' };
 
 function scoreHcp(h, obj, noteLive) {
-  const pot = h.dec * 10;
-  const loy = LOY[obj][h.loy];
+  const pot = Math.round(h.dec * 10 * (h.m2 >= 8 ? 0.7 : 1.0));
+  const mom = LOY[obj][h.loy];
   const gap = h.plan > 0 ? Math.max(0, Math.round((h.plan - h.done) / h.plan * 100)) : 0;
-  const mom = h.dcl === 'Y' ? 100 : 40;
 
   const e = EV[h.ev];
   let int = null;
@@ -89,7 +89,7 @@ function scoreHcp(h, obj, noteLive) {
     rep = h.repd <= 120 ? b : Math.round(50 + (b - 50) * Math.pow(0.5, (h.repd - 120) / 60));
   }
 
-  const parts = { pot, loy, int, gap, mom, rep };
+  const parts = { pot, mom, int, gap, rep };
   let num = 0, avail = 0;
   for (const k in W) { if (parts[k] !== null) { num += W[k] * parts[k]; avail += W[k]; } }
   const total = avail ? Math.round(num / avail * 10) / 10 : 0;
@@ -148,16 +148,15 @@ export default function DynamicTargetingPage() {
     const { h, r } = cur;
 
     const fresh = (h.ev === 'none' || h.ev === 'nomatch') ? '' : ` · ${h.evd} days ago`;
-    const repRaw = !noteLive ? 'Field not built yet'
+    const repRaw = !noteLive ? 'Note table not live yet'
       : !h.rep ? 'No note on file'
-      : REP[h.rep].l + (h.repd > 120 ? ` · ${h.repd} days ago, decaying` : ` · ${h.repd} days ago`);
+      : REP[h.rep].l + ' — AI classified' + (h.repd > 120 ? ` · ${h.repd} days ago, decaying` : ` · ${h.repd} days ago`);
 
     const raw = {
-      pot: `Decile ${h.dec} of 10`,
-      loy: h.loy,
+      pot: `M1 decile ${h.dec}, M2 decile ${h.m2} — ${h.m2 >= 8 ? 'headroom already taken, x0.7' : 'full headroom'}`,
+      mom: h.loy,
       int: EV[h.ev].l + fresh,
       gap: `${h.plan} planned, ${h.done} done`,
-      mom: h.dcl === 'Y' ? 'Declining initiator = Y' : 'Declining initiator = N',
       rep: repRaw,
     };
 
@@ -234,7 +233,7 @@ export default function DynamicTargetingPage() {
           </div>
         )}
 
-        <div className="secl">The six inputs</div>
+        <div className="secl">The five inputs</div>
         <table className="data-table">
           <thead>
             <tr><th>Input</th><th>Value read</th><th className="r">Score</th><th className="r">Weight</th><th className="r">Contribution</th></tr>
@@ -301,7 +300,7 @@ export default function DynamicTargetingPage() {
           <div className="tgt-ctl-group"><span className="cohort-form-label">Objective</span><ChipGroup options={OBJECTIVES} current={obj} onPick={setObj} /></div>
           <div className="tgt-ctl-group"><span className="cohort-form-label">Priority</span><ChipGroup options={BANDS} current={bandF} onPick={setBandF} /></div>
           <label className="tgt-sw-label" style={{ marginLeft: 'auto' }}>
-            <input type="checkbox" checked={noteLive} onChange={e => setNoteLive(e.target.checked)} /> Rep note field is live
+            <input type="checkbox" checked={noteLive} onChange={e => setNoteLive(e.target.checked)} /> Rep note table is live
           </label>
           <label className="tgt-sw-label">
             <input type="checkbox" checked={showSrc} onChange={e => setShowSrc(e.target.checked)} /> Show source table and column
