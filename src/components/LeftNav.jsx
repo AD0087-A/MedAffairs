@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { User, Activity, BarChart2, Users, Target, Zap, ClipboardList, ChevronDown } from 'lucide-react';
+import { User, Activity, BarChart2, Users, Target, Zap, ChevronDown } from 'lucide-react';
 
 const NAV_ITEMS = [
   { key: 'brief', label: 'MSL Call Brief', icon: User },
@@ -7,17 +7,23 @@ const NAV_ITEMS = [
   { key: 'executive', label: 'Executive Insights', icon: BarChart2 },
   { key: 'hcp-segmentation', label: 'HCP Segmentation & Targeting', icon: Users },
   { key: 'targeting', label: 'Dynamic Targeting', icon: Target },
-  { key: 'nba-engine', label: 'NBA Engine', icon: Zap },
-  { key: 'call-queue', label: 'My Call Queue', icon: ClipboardList },
+  {
+    key: 'nba-console', label: 'NBA Console', icon: Zap,
+    subItems: [
+      { key: 'command', label: 'Command Center' },
+      { key: 'hcps', label: 'HCPs' },
+    ],
+  },
 ];
 
-export default function LeftNav({ activePage, onNavigate }) {
+export default function LeftNav({ activePage, activeSubPage, onNavigate }) {
   const [expandedKey, setExpandedKey] = useState(null);
 
   function handleItemClick(item) {
     if (item.subItems && item.subItems.length > 0) {
-      if (expandedKey === item.key) {
-        setExpandedKey(null);
+      const alreadyActive = activePage === item.key;
+      if (alreadyActive) {
+        setExpandedKey(k => (k === item.key ? null : item.key));
       } else {
         setExpandedKey(item.key);
         onNavigate(item.key, item.subItems[0].key);
@@ -31,13 +37,13 @@ export default function LeftNav({ activePage, onNavigate }) {
   function renderItem(item) {
     const Icon = item.icon;
     const isActive = activePage === item.key;
-    const isExpanded = expandedKey === item.key;
     const hasSubItems = item.subItems && item.subItems.length > 0;
+    const isExpanded = isActive || expandedKey === item.key;
 
     return (
       <li key={item.key} className="left-nav-item">
         <button
-          className={`left-nav-btn${isActive ? ' active' : ''}`}
+          className={`left-nav-btn${isActive && !hasSubItems ? ' active' : ''}`}
           onClick={() => handleItemClick(item)}
           title={item.label}
         >
@@ -47,6 +53,20 @@ export default function LeftNav({ activePage, onNavigate }) {
             <ChevronDown size={13} className={`nav-chevron${isExpanded ? ' open' : ''}`} />
           )}
         </button>
+        {hasSubItems && isExpanded && (
+          <ul className="left-nav-subitems">
+            {item.subItems.map(sub => (
+              <li key={sub.key}>
+                <button
+                  className={`left-nav-subbtn${isActive && activeSubPage === sub.key ? ' active' : ''}`}
+                  onClick={() => { setExpandedKey(item.key); onNavigate(item.key, sub.key); }}
+                >
+                  {sub.label}
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
       </li>
     );
   }

@@ -3890,6 +3890,37 @@
   transform: rotate(180deg);
 }
 
+.left-nav-subitems {
+  list-style: none;
+  margin: 0;
+  padding: 2px 0 6px;
+}
+
+.left-nav-subbtn {
+  display: block;
+  width: 100%;
+  padding: 7px 14px 7px 38px;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.7);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s;
+}
+
+.left-nav-subbtn:hover {
+  background: rgba(255,255,255,0.1);
+  color: white;
+}
+
+.left-nav-subbtn.active {
+  background: rgba(255,255,255,0.18);
+  color: white;
+  font-weight: 600;
+}
+
 .app-header {
   height: 52px;
   background: white;

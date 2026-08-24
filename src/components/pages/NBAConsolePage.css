@@ -1,0 +1,343 @@
+/* NBA Console — scoped under .ndc-app so nothing here collides with the
+   rest of the shell's .card/.chip/.btn/.kpi classes. Structurally adapted
+   from the "Rep Decision Console" reference artifact (every class prefixed
+   ndc-), but retokened onto Improzo's own palette/typography (see
+   index.css's :root) so it reads as a native page, not a bolted-on tool —
+   this is nested inside Improzo's own left-nav + header now, not a full-page
+   takeover, so it carries no rail, topbar, or theme toggle of its own. */
+
+.ndc-app {
+  --bg:#F8FAFC; --surface:#FFFFFF; --surface-2:#F1F5F9; --surface-3:#E7EDF3;
+  --line:#E2E8F0; --line-2:#CBD5E1;
+  --ink:#0F172A; --ink-2:#334155; --mut:#64748B; --mut-2:#94A3B8;
+  --accent:#0284C7; --accent-ink:#FFFFFF; --accent-soft:#E0F2FE; --accent-line:#BAE6F5;
+  --crit:#B91C1C; --crit-soft:#FEE2E2; --crit-line:#FECACA;
+  --warn:#B45309; --warn-soft:#FEF3C7; --warn-line:#FDE68A;
+  --pos:#047857; --pos-soft:#ECFDF5; --pos-line:#A7F3D0;
+  --shadow:0 1px 2px rgba(0,0,0,.05), 0 4px 6px -1px rgba(0,0,0,.04);
+  --shadow-lg:0 10px 15px -3px rgba(0,0,0,.08), 0 4px 6px -2px rgba(0,0,0,.05);
+  --r:12px;
+  --mk:#0284C7; --mk-crit:#B91C1C; --grid:#E7EDF3;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+
+  color: var(--ink);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.ndc-app *, .ndc-app *::before, .ndc-app *::after { box-sizing: border-box; }
+.ndc-app button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
+.ndc-app h1, .ndc-app h2, .ndc-app h3 { margin: 0; font-weight: 600; letter-spacing: -.011em; }
+.ndc-app table { border-collapse: collapse; width: 100%; }
+.ndc-num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+/* filter-chip row (brand/territory/today) */
+.ndc-topbar { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+.ndc-sel {
+  display: inline-flex; align-items: center; gap: 6px; background: var(--surface-2); border: 1px solid var(--line);
+  border-radius: 7px; padding: 5px 9px; font-size: 12.5px; color: var(--ink-2); font-weight: 500;
+}
+.ndc-sel select { background: none; border: none; font: inherit; color: inherit; font-weight: 600; }
+.ndc-page { max-width: 1280px; width: 100%; }
+
+/* primitives */
+/* two-tier elevation: cards sit flat at rest, lift slightly on hover so the
+   surface reads as an interactive plane rather than flat printed paper. */
+.ndc-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow); transition: box-shadow .15s ease, transform .15s ease; }
+.ndc-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-1px); }
+.ndc-card-hd { display: flex; align-items: center; gap: 9px; padding: 13px 16px; border-bottom: 1px solid var(--line); }
+.ndc-card-hd h2 { font-size: 13px; letter-spacing: .03em; text-transform: uppercase; color: var(--mut); }
+.ndc-card-hd .ndc-r { margin-left: auto; display: flex; gap: 6px; align-items: center; }
+.ndc-chip {
+  display: inline-flex; align-items: center; gap: 5px; border-radius: 999px; padding: 2.5px 9px;
+  font-size: 11px; font-weight: 600; letter-spacing: .03em; border: 1px solid transparent; white-space: nowrap;
+}
+.ndc-chip.crit { background: var(--crit-soft); color: var(--crit); border-color: var(--crit-line); }
+.ndc-chip.warn { background: var(--warn-soft); color: var(--warn); border-color: var(--warn-line); }
+.ndc-chip.pos  { background: var(--pos-soft);  color: var(--pos);  border-color: var(--pos-line); }
+.ndc-chip.neu  { background: var(--surface-2); color: var(--mut); border-color: var(--line); }
+.ndc-chip.acc  { background: var(--accent-soft); color: var(--accent); border-color: var(--accent-line); }
+/* secondary buttons get a visible tinted fill, not just a hairline border —
+   var(--surface) on a white card was effectively white-on-white, reading as
+   plain text rather than a button. ".ndc-app" prefix (same fix as .ndc-link
+   above) so this actually outranks the ".ndc-app button{background:none;
+   border:none}" reset — a bare .ndc-btn class was losing that fight, which
+   is why every secondary button (Pre-call brief, Why this?, See full
+   evidence, Undo...) had no visible border or fill at all; only .ndc-btn.pri
+   (two classes) was ever strong enough to survive it. */
+.ndc-app .ndc-btn {
+  display: inline-flex; align-items: center; gap: 6px; border-radius: 7px; padding: 7px 13px;
+  font-size: 13px; font-weight: 600; border: 1px solid var(--line-2); background: var(--surface-2); color: var(--ink-2);
+}
+.ndc-app .ndc-btn:hover { background: var(--surface-3); border-color: var(--mut-2); }
+.ndc-app .ndc-btn.pri { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.ndc-app .ndc-btn.pri:hover { filter: brightness(1.08); }
+.ndc-app .ndc-btn.sm { padding: 5px 10px; font-size: 12.5px; }
+.ndc-app .ndc-btn[disabled] { opacity: .45; cursor: not-allowed; }
+.ndc-lbl { font-size: 10px; text-transform: uppercase; letter-spacing: .09em; color: var(--mut); font-weight: 600; }
+/* .ndc-app extra prefix so this outranks the base ".ndc-app button{color:inherit}"
+   reset — a bare .ndc-link class alone loses that specificity fight. */
+.ndc-app .ndc-link { color: var(--accent); font-weight: 600; background: none; border: none; padding: 0; cursor: pointer; }
+.ndc-app .ndc-link:hover { text-decoration: underline; }
+
+/* dismiss-reason popover ("Not relevant ▾") — anchored to its trigger button,
+   was previously unstyled and rendered inline in the page flow. */
+.ndc-menu-wrap { position: relative; display: inline-flex; }
+.ndc-menu {
+  position: absolute; top: calc(100% + 6px); left: 0; z-index: 40;
+  display: flex; flex-direction: column; min-width: 190px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--r);
+  box-shadow: var(--shadow-lg); padding: 6px;
+}
+.ndc-menu .mh { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--mut); padding: 6px 8px 5px; }
+.ndc-menu button { display: block; width: 100%; text-align: left; border-radius: 6px; padding: 8px 9px; font-size: 13px; font-weight: 500; color: var(--ink); }
+.ndc-menu button:hover { background: var(--surface-2); }
+
+/* KPI row — bento-style: 5 equal units, but the most actionable metric
+   (Overdue) permanently occupies 2 of them instead of matching the other
+   three 1-for-1, so it reads as the one that actually needs attention
+   rather than fighting for equal visual weight with "New signals". */
+.ndc-kpis { display: grid; grid-template-columns: repeat(5,1fr); gap: 12px; margin-bottom: 16px; }
+.ndc-kpi { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 14px 16px; box-shadow: var(--shadow); transition: box-shadow .15s ease, transform .15s ease; }
+.ndc-kpi:hover { box-shadow: var(--shadow-lg); transform: translateY(-1px); }
+.ndc-kpi .v { font-family: var(--mono); font-size: 29px; font-weight: 600; line-height: 1.05; letter-spacing: -.02em; display: block; margin: 6px 0 3px; }
+.ndc-kpi .s { font-size: 12px; color: var(--mut); }
+.ndc-kpi-lg { grid-column: span 2; display: flex; flex-direction: column; justify-content: center; }
+.ndc-kpi-lg .v { font-size: 36px; }
+
+/* NBA hero card */
+.ndc-nba { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow); }
+.ndc-nba::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--line-2); border-radius: var(--r) 0 0 var(--r); }
+.ndc-nba.sev-crit::before { background: var(--crit); }
+.ndc-nba.sev-warn::before { background: var(--warn); }
+.ndc-nba.sev-pos::before { background: var(--pos); }
+.ndc-nba.done { opacity: .62; }
+.ndc-nba-hd { display: flex; align-items: flex-start; gap: 12px; padding: 15px 17px 12px 19px; }
+.ndc-nba-hd .who { min-width: 0; flex: 1; }
+.ndc-nba-name { font-size: 16.5px; font-weight: 600; letter-spacing: -.012em; }
+.ndc-nba-meta { font-size: 12px; color: var(--mut); margin-top: 2px; }
+.ndc-nba-state { font-size: 13px; font-weight: 600; color: var(--ink-2); margin-top: 7px; }
+.ndc-nba-verb { font-size: 14.5px; font-weight: 600; color: var(--accent); margin-top: 2px; }
+.ndc-nba-tags { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; flex: none; }
+/* the hero card is the one place priority score wasn't shown at all —
+   it's visible in the queue rows and the full table, but not here, even
+   though it's the same ranking number driving "why this HCP is on top". */
+.ndc-nba-score { display: flex; flex-direction: column; align-items: center; margin-right: 2px; }
+.ndc-nba-score .ndc-num { font-size: 22px; font-weight: 700; line-height: 1; color: var(--ink); }
+.ndc-nba-score .lbl { font-size: 9px; text-transform: uppercase; letter-spacing: .06em; color: var(--mut); margin-top: 1px; }
+.ndc-nba-body { padding: 0 17px 15px 19px; display: grid; gap: 14px; }
+.ndc-sigs { display: grid; gap: 5px; }
+.ndc-sig { display: grid; grid-template-columns: 170px 1fr 70px; align-items: center; gap: 10px; font-size: 12.5px; }
+.ndc-sig .n { color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ndc-sig .bar { height: 7px; border-radius: 2px; background: var(--surface-3); overflow: hidden; }
+.ndc-sig .bar i { display: block; height: 100%; border-radius: 2px; }
+.ndc-sig .v { font-family: var(--mono); font-size: 12px; text-align: right; font-weight: 500; white-space: nowrap; }
+.ndc-sig.crit .v { color: var(--crit); } .ndc-sig.crit .bar i { background: var(--crit); }
+.ndc-sig.warn .v { color: var(--warn); } .ndc-sig.warn .bar i { background: var(--warn); }
+.ndc-sig.pos  .v { color: var(--pos); }  .ndc-sig.pos  .bar i { background: var(--pos); }
+.ndc-facts {
+  display: grid; grid-template-columns: repeat(auto-fit,minmax(165px,1fr)); gap: 10px;
+  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 12px 0;
+}
+.ndc-fact .ndc-lbl { display: block; margin-bottom: 3px; }
+.ndc-fact .t { font-size: 13px; font-weight: 500; color: var(--ink); }
+.ndc-fact .t small { display: block; font-weight: 400; color: var(--mut); font-size: 11.5px; margin-top: 1px; }
+.ndc-acts { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.ndc-acts .sp { margin-left: auto; }
+
+.ndc-queue { display: grid; gap: 10px; }
+.ndc-qrow {
+  display: flex; align-items: center; gap: 13px; padding: 12px 15px 12px 17px; position: relative;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); cursor: pointer; text-align: left; width: 100%;
+}
+.ndc-qrow::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--line-2); border-radius: var(--r) 0 0 var(--r); }
+.ndc-qrow.sev-crit::before { background: var(--crit); } .ndc-qrow.sev-warn::before { background: var(--warn); } .ndc-qrow.sev-pos::before { background: var(--pos); }
+.ndc-qrow:hover { border-color: var(--line-2); background: var(--surface-2); }
+.ndc-qrow .qn { display: block; font-weight: 600; font-size: 14px; color: var(--ink); }
+.ndc-qrow .qm { display: block; font-size: 12px; color: var(--mut); margin-top: 2px; line-height: 1.4; }
+.ndc-qrow .qw { margin-left: auto; text-align: right; flex: none; }
+.ndc-qrow .qv { display: block; font-family: var(--mono); font-size: 15px; font-weight: 600; }
+.ndc-qrow.done { opacity: .55; }
+
+/* detail grids */
+.ndc-grid2 { display: grid; grid-template-columns: 1.35fr .95fr; gap: 16px; align-items: start; }
+.ndc-grid2 > * { min-width: 0; }
+.ndc-grid3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+.ndc-grid3 > * { min-width: 0; }
+.ndc-hero3 .ndc-card { display: flex; flex-direction: column; }
+.ndc-hero3 .bd { padding: 15px 16px; display: grid; gap: 9px; }
+.ndc-big { font-size: 19px; font-weight: 600; letter-spacing: -.015em; }
+.ndc-kv { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font-size: 13px; margin: 0; }
+.ndc-kv dt { color: var(--mut); font-size: 12px; }
+.ndc-kv dd { margin: 0; font-weight: 500; }
+
+/* table */
+.ndc-filters { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 14px; }
+.ndc-tbl-wrap { overflow-x: auto; border-radius: var(--r); }
+.ndc-tbl { font-size: 13px; min-width: 780px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); }
+.ndc-tbl th {
+  text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: .09em; color: var(--mut);
+  font-weight: 600; padding: 10px 13px; border-bottom: 1px solid var(--line); white-space: nowrap; background: var(--surface-2);
+}
+.ndc-tbl td { padding: 11px 13px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+.ndc-tbl tr:last-child td { border-bottom: none; }
+.ndc-tbl tbody tr { cursor: pointer; }
+.ndc-tbl tbody tr:hover { background: var(--surface-2); }
+.ndc-tbl .why { color: var(--mut); font-size: 12.5px; }
+.ndc-srail { display: inline-block; width: 3px; height: 26px; border-radius: 2px; vertical-align: middle; margin-right: 9px; background: var(--line-2); }
+.ndc-srail.crit { background: var(--crit); } .ndc-srail.warn { background: var(--warn); } .ndc-srail.pos { background: var(--pos); }
+
+/* drawer */
+.ndc-scrim { position: fixed; inset: 0; background: rgba(10,12,17,.5); z-index: 60; opacity: 0; pointer-events: none; transition: opacity .18s; }
+.ndc-scrim.on { opacity: 1; pointer-events: auto; }
+.ndc-drawer {
+  position: fixed; top: 0; right: 0; bottom: 0; width: min(470px,94vw); background: var(--surface);
+  border-left: 1px solid var(--line); z-index: 70; transform: translateX(102%); transition: transform .22s cubic-bezier(.3,.7,.3,1);
+  display: flex; flex-direction: column; box-shadow: var(--shadow-lg);
+}
+.ndc-drawer.on { transform: none; }
+.ndc-drawer-hd { display: flex; align-items: center; gap: 10px; padding: 16px 18px; border-bottom: 1px solid var(--line); }
+.ndc-drawer-hd h2 { font-size: 15px; }
+.ndc-drawer-bd { overflow-y: auto; padding: 18px; display: grid; gap: 20px; }
+.ndc-x { width: 28px; height: 28px; border-radius: 7px; display: grid; place-items: center; margin-left: auto; color: var(--mut); }
+.ndc-x:hover { background: var(--surface-2); color: var(--ink); }
+.ndc-x svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 1.9; stroke-linecap: round; }
+.ndc-plot { background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px; padding: 12px; }
+.ndc-meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.ndc-meta-grid .ndc-lbl { display: block; margin-bottom: 2px; }
+.ndc-meta-grid .mv { font-size: 13px; font-weight: 500; }
+.ndc-meta-grid .mv.mono { font-family: var(--mono); font-size: 12.5px; }
+
+/* brief modal */
+.ndc-modal { position: fixed; z-index: 70; inset: 0; display: grid; place-items: center; padding: 24px; opacity: 0; pointer-events: none; transition: opacity .18s; }
+.ndc-modal.on { opacity: 1; pointer-events: auto; }
+.ndc-sheet { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow-lg); width: min(620px,100%); max-height: 88vh; overflow-y: auto; }
+.ndc-sheet-hd { padding: 20px 24px 14px; border-bottom: 2px solid var(--ink); display: flex; align-items: flex-start; gap: 12px; }
+.ndc-sheet-hd .ndc-lbl { margin-bottom: 5px; display: block; }
+.ndc-sheet-hd h2 { font-size: 20px; letter-spacing: -.02em; }
+.ndc-sheet-bd { padding: 20px 24px 24px; display: grid; gap: 19px; }
+.ndc-sec h3 { font-size: 10.5px; text-transform: uppercase; letter-spacing: .1em; color: var(--mut); margin-bottom: 7px; }
+.ndc-sec p { margin: 0; font-size: 14.5px; line-height: 1.55; }
+.ndc-sec ul { margin: 0; padding-left: 17px; font-size: 14px; line-height: 1.65; }
+.ndc-sheet-ft { padding: 14px 24px; border-top: 1px solid var(--line); display: flex; gap: 8px; align-items: center; background: var(--surface-2); border-radius: 0 0 12px 12px; }
+
+/* toast */
+.ndc-toasts { position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%); z-index: 90; display: grid; gap: 8px; justify-items: center; }
+.ndc-toast { background: var(--ink); color: var(--bg); border-radius: 8px; padding: 9px 15px; font-size: 13px; font-weight: 500; box-shadow: var(--shadow-lg); animation: ndc-pop .25s cubic-bezier(.2,.8,.3,1); }
+.ndc-toast b { font-weight: 600; }
+@keyframes ndc-pop { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+.ndc-empty { padding: 44px; text-align: center; color: var(--mut); font-size: 13.5px; }
+.ndc-note { font-size: 12px; color: var(--mut); line-height: 1.55; }
+.ndc-loop { display: flex; gap: 22px; flex-wrap: wrap; padding: 13px 16px; align-items: center; }
+.ndc-loop .it { display: grid; }
+.ndc-loop .it b { font-family: var(--mono); font-size: 17px; font-weight: 600; }
+
+@media (max-width: 1020px) {
+  .ndc-grid2 { grid-template-columns: 1fr; } .ndc-grid3 { grid-template-columns: 1fr; }
+  /* the 5-unit bento split only works with room for it — below this width,
+     3 span-1 tiles plus a span-2 tile in a 2-column grid leaves the third
+     tile orphaned alone on its own row with a large gap before Overdue.
+     Fall back to a plain, equal 2x2 grid instead. */
+  .ndc-kpis { grid-template-columns: repeat(2,1fr); }
+  .ndc-kpi-lg { grid-column: span 1; }
+  .ndc-kpi-lg .v { font-size: 29px; }
+}
+@media (max-width: 760px) {
+  .ndc-sig { grid-template-columns: minmax(0,1fr) 1.1fr 60px; gap: 8px; }
+  .ndc-kpi .v { font-size: 25px; }
+}
+
+/* ---------- HCP detail screen (snapshot / journey / sequence / context) --- */
+.ndc-snap { padding: 15px 16px; display: grid; gap: 20px; }
+.ndc-snap-tiles { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+/* channel + theme affinity run side by side now that the detail screen is a
+   single full-width column instead of sharing space with a right rail —
+   collapses back to one-after-another below 900px, where two 5-6-bar
+   charts side by side would get too cramped to read. */
+.ndc-snap-charts { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+@media (max-width: 900px) {
+  .ndc-snap-charts { grid-template-columns: 1fr; gap: 20px; }
+}
+.ndc-st { background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; }
+.ndc-st .v { display: block; font-family: var(--mono); font-size: 20px; font-weight: 600; letter-spacing: -.02em; margin: 4px 0 1px; }
+.ndc-st .s { font-size: 11px; color: var(--mut); }
+/* each chart is its own boxed panel — previously had no container at all,
+   so the two ran together with nothing but a gap between them. Tinted
+   background (not white) so it actually shows up against the white card
+   behind it, same reasoning as the .ndc-st KPI tiles above. */
+.ndc-chart { background: var(--surface-2); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px 16px; }
+.ndc-chart h3 { font-size: 12.5px; font-weight: 600; color: var(--ink); margin-bottom: 2px; }
+.ndc-chart .cap { font-size: 11.5px; color: var(--mut); margin-bottom: 12px; display: block; }
+
+.ndc-vbars { display: flex; align-items: flex-end; gap: 8px; border-bottom: 1px solid var(--grid); padding-bottom: 0; }
+.ndc-vb { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 5px; }
+.ndc-vb .vv { font-family: var(--mono); font-size: 11.5px; font-weight: 600; color: var(--ink-2); line-height: 1; }
+/* tier colour follows the same red/amber/green language as the "Why now"
+   signal bars, so affinity reads at a glance instead of every bar looking
+   the same flat blue. High >=75, Medium >=50, Low below that. */
+.ndc-vbar { width: 100%; max-width: 46px; background: var(--mk); border-radius: 4px 4px 0 0; }
+.ndc-vb.hi .ndc-vbar { background: var(--pos); }
+.ndc-vb.hi .vv { color: var(--pos); }
+.ndc-vb.mid .ndc-vbar { background: var(--warn); }
+.ndc-vb.mid .vv { color: var(--warn); }
+.ndc-vb.lo .ndc-vbar { background: var(--crit); }
+.ndc-vb.lo .vv { color: var(--crit); }
+/* consent-blocked is a compliance state, not a performance one — kept
+   neutral grey so it never reads as just another "low affinity" bar. */
+.ndc-vb.blk .ndc-vbar { background: var(--mut-2); }
+.ndc-vb.blk .vv { color: var(--mut); }
+.ndc-vlabels { display: flex; gap: 8px; margin-top: 7px; }
+.ndc-vlabels span { flex: 1; text-align: center; font-size: 11.5px; color: var(--ink-2); line-height: 1.35; }
+.ndc-vlabels em { display: block; font-style: normal; font-size: 9.5px; letter-spacing: .05em; text-transform: uppercase; color: var(--mut-2); margin-top: 2px; }
+.ndc-vlabels em.on { color: var(--accent); font-weight: 600; }
+.ndc-vlabels em.no { color: var(--crit); font-weight: 600; }
+.ndc-vlabels em.top { color: var(--pos); font-weight: 600; }
+
+.ndc-jrny { display: flex; padding: 16px 16px 15px; gap: 4px; }
+.ndc-jstep { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; position: relative; min-width: 0; }
+.ndc-jstep:not(:last-child)::after { content: ""; position: absolute; top: 36px; left: calc(50% + 18px); right: calc(-50% + 18px); height: 2px; background: var(--grid); }
+.ndc-jw { font-family: var(--mono); font-size: 10.5px; color: var(--mut); height: 15px; line-height: 15px; white-space: nowrap; }
+/* node is now a lucide icon badge (channel/type at a glance) instead of a
+   plain colour dot — a real line-icon, matching the rest of the app's icon
+   set, not an emoji. done/today/next/future are told apart by the badge's
+   fill, border, and icon stroke colour. */
+.ndc-jnode {
+  width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  background: var(--surface-2); border: 1px solid var(--line); box-shadow: 0 0 0 3px var(--surface); z-index: 1;
+}
+.ndc-jnode svg { width: 15px; height: 15px; stroke: var(--mut); stroke-width: 2px; }
+.ndc-jstep.done .ndc-jnode { background: var(--pos-soft); border-color: var(--pos-line); }
+.ndc-jstep.done .ndc-jnode svg { stroke: var(--pos); }
+.ndc-jstep.today .ndc-jnode {
+  width: 36px; height: 36px; background: var(--accent-soft); border: 2px solid var(--accent);
+  box-shadow: 0 0 0 3px var(--surface), 0 0 0 6px var(--accent-soft);
+}
+.ndc-jstep.today .ndc-jnode svg { width: 17px; height: 17px; stroke: var(--accent); }
+.ndc-jstep.next .ndc-jnode { background: var(--surface); border: 2px dashed var(--accent-line); }
+.ndc-jstep.next .ndc-jnode svg { stroke: var(--accent); }
+/* further-out recommended-sequence steps continue the same line, dimmer
+   and dashed so "future" reads as more provisional than the immediate
+   "next" step. */
+.ndc-jstep.future .ndc-jnode { background: var(--surface); border: 2px dashed var(--line-2); opacity: .7; }
+.ndc-jstep.future .ndc-jnode svg { stroke: var(--mut-2); }
+.ndc-jt { font-size: 12.5px; font-weight: 600; text-align: center; line-height: 1.3; }
+.ndc-jm { font-size: 10px; letter-spacing: .05em; text-transform: uppercase; color: var(--mut-2); font-weight: 600; }
+.ndc-jstep.today .ndc-jt, .ndc-jstep.today .ndc-jm { color: var(--accent); }
+.ndc-jstep.next .ndc-jt { color: var(--mut); }
+.ndc-jstep.future .ndc-jt { color: var(--mut-2); font-weight: 500; }
+
+.ndc-ctx { padding: 15px 16px; display: grid; gap: 11px; }
+.ndc-ctx .q { font-size: 13.5px; line-height: 1.5; padding-left: 11px; border-left: 2px solid var(--accent-line); color: var(--ink-2); margin: 5px 0 0; }
+.ndc-ctx textarea {
+  width: 100%; font: inherit; font-size: 13px; color: var(--ink); background: var(--surface-2);
+  border: 1px solid var(--line); border-radius: 7px; padding: 8px 10px; resize: vertical; min-height: 58px;
+}
+.ndc-kbd { font-family: var(--mono); font-size: 10.5px; background: var(--surface-3); border: 1px solid var(--line); border-radius: 4px; padding: 1px 5px; color: var(--mut); }
+
+@media (max-width: 760px) {
+  .ndc-snap-tiles { grid-template-columns: 1fr; }
+  .ndc-jrny { overflow-x: auto; gap: 14px; }
+  .ndc-jstep { min-width: 74px; }
+  .ndc-vlabels span, .ndc-vb .vv { font-size: 10.5px; }
+}

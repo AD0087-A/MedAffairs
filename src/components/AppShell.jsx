@@ -8,8 +8,7 @@ import ExecutiveInsights from './ExecutiveInsights';
 import AskIzoChat from './AskIzoChat';
 import HCPSegmentationPage from './pages/HCPSegmentationPage';
 import DynamicTargetingPage from './pages/DynamicTargetingPage';
-import NBAEnginePage from './pages/NBAEnginePage';
-import RepCallQueuePage from './pages/RepCallQueuePage';
+import NBAConsolePage from './pages/NBAConsolePage';
 
 const WORKSPACE_TABS = ['Meeting Prep', 'Timeline', 'Library'];
 
@@ -19,14 +18,20 @@ const PAGE_LABELS = {
   executive: 'Executive Insights',
   'hcp-segmentation': 'HCP Segmentation and Targeting',
   targeting: 'Dynamic Targeting',
-  'nba-engine': 'NBA Engine',
-  'call-queue': 'My Call Queue',
+  'nba-console': 'NBA Console',
 };
+const NBA_VIEW_LABELS = { command: 'NBA Command Center', hcps: 'HCPs' };
 
 export default function AppShell() {
   const [activePage, setActivePage] = useState('weekly');
+  const [nbaView, setNbaView] = useState('command');
   const [workspaceTab, setWorkspaceTab] = useState('Meeting Prep');
   const [isChatOpen, setIsChatOpen] = useState(false);
+
+  function handleNavigate(page, sub) {
+    setActivePage(page);
+    if (page === 'nba-console' && sub) setNbaView(sub);
+  }
 
   function renderMainContent() {
     if (activePage === 'brief') {
@@ -58,12 +63,8 @@ export default function AppShell() {
       return <DynamicTargetingPage />;
     }
 
-    if (activePage === 'nba-engine') {
-      return <NBAEnginePage />;
-    }
-
-    if (activePage === 'call-queue') {
-      return <RepCallQueuePage />;
+    if (activePage === 'nba-console') {
+      return <NBAConsolePage view={nbaView} key={nbaView} />;
     }
 
     return (
@@ -73,11 +74,17 @@ export default function AppShell() {
     );
   }
 
-  const pageTitle = PAGE_LABELS[activePage] || activePage;
+  const pageTitle = activePage === 'nba-console'
+    ? (NBA_VIEW_LABELS[nbaView] || PAGE_LABELS['nba-console'])
+    : (PAGE_LABELS[activePage] || activePage);
 
   return (
     <div className="app-shell">
-      <LeftNav activePage={activePage} onNavigate={setActivePage} />
+      <LeftNav
+        activePage={activePage}
+        activeSubPage={activePage === 'nba-console' ? nbaView : null}
+        onNavigate={handleNavigate}
+      />
 
       <div className="app-shell-main">
         <header className="app-header">
