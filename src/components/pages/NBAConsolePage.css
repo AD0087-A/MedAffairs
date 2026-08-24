@@ -38,7 +38,10 @@
   border-radius: 7px; padding: 5px 9px; font-size: 12.5px; color: var(--ink-2); font-weight: 500;
 }
 .ndc-sel select { background: none; border: none; font: inherit; color: inherit; font-weight: 600; }
-.ndc-page { max-width: 1280px; width: 100%; }
+/* no max-width here — every other page in this app (Weekly Insights, HCP
+   Segmentation, Dynamic Targeting) goes full width with no cap, so capping
+   this one made it look visibly narrower/smaller on a wide screen. */
+.ndc-page { width: 100%; }
 
 /* primitives */
 /* two-tier elevation: cards sit flat at rest, lift slightly on hover so the

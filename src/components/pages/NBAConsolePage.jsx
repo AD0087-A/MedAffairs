@@ -26,15 +26,18 @@ function channelAllowed(h, ch) {
   if (h.consent === 'Unknown' && ch === 'Email') return false;
   return h.prefs.indexOf(ch) !== -1 || ch === 'F2F';
 }
+// Gating stays live (consent still determines what's actionable) — only the
+// visible "Consent: Granted/Denied/Unknown" field is gone, so the reason
+// text here is deliberately generic rather than naming consent explicitly.
 function blockReason(h, ch) {
-  if (h.consent === 'Denied' && DIGITAL[ch]) return 'Consent denied — digital channels unavailable';
-  if (h.consent === 'Unknown' && ch === 'Email') return 'Consent not on file — email unavailable';
+  if (h.consent === 'Denied' && DIGITAL[ch]) return 'This channel is not currently available for this HCP';
+  if (h.consent === 'Unknown' && ch === 'Email') return 'This channel is not currently available for this HCP';
   if (h.prefs.indexOf(ch) === -1) return 'Not a stated channel preference';
   return '';
 }
 function consentBlocked(h, ch) {
-  if (h.consent === 'Denied' && DIGITAL[ch]) return 'Consent denied';
-  if (h.consent === 'Unknown' && ch === 'Email') return 'Consent not on file';
+  if (h.consent === 'Denied' && DIGITAL[ch]) return 'Not currently available';
+  if (h.consent === 'Unknown' && ch === 'Email') return 'Not currently available';
   return '';
 }
 function sev(h) {
@@ -46,11 +49,6 @@ function band(v) { return v >= 75 ? 'High' : v >= 50 ? 'Medium' : 'Low'; }
 function tier(v) { return v >= 75 ? 'hi' : v >= 50 ? 'mid' : 'lo'; }
 
 // ── small chips ──────────────────────────────────────────────────────────
-function ConsentChip({ h }) {
-  if (h.consent === 'Granted') return <span className="ndc-chip pos"><span className="ndc-dot" />Consented</span>;
-  if (h.consent === 'Denied') return <span className="ndc-chip crit"><span className="ndc-dot" />Consent denied</span>;
-  return <span className="ndc-chip warn"><span className="ndc-dot" />Consent unknown</span>;
-}
 function PriorityChip({ h }) {
   if (h.rec.type === 'Insight') return <span className="ndc-chip acc">Insight</span>;
   return h.priority === 'Urgent' ? <span className="ndc-chip crit">Urgent</span> : <span className="ndc-chip neu">Normal</span>;
@@ -112,7 +110,7 @@ function NbaCard({ h, status, onAccept, onDismiss, onUndo, onOpenDetail, onWhy, 
       </div>
       <div className="ndc-nba-tags">
         <span className="ndc-nba-score"><span className="ndc-num">{h.score}</span><span className="lbl">Score</span></span>
-        <PriorityChip h={h} /><ConsentChip h={h} />
+        <PriorityChip h={h} />
       </div>
     </div>
   );
@@ -261,7 +259,7 @@ function CommandCenter({ open, status, sel, mark, undo, onOpenDetail, onWhy, onB
 
 // ── All Recommendations ─────────────────────────────────────────────────
 function AllRecommendations({ status, onOpen }) {
-  const [filters, setFilters] = useState({ priority: 'All', channel: 'All', consent: 'All', trigger: 'All' });
+  const [filters, setFilters] = useState({ priority: 'All', channel: 'All', trigger: 'All' });
   const [sortKey, setSortKey] = useState('score');
 
   const triggers = Array.from(new Set(HCPS.map(h => h.signals[0].k)));
@@ -269,7 +267,6 @@ function AllRecommendations({ status, onOpen }) {
   let rows = HCPS.filter(h => {
     if (filters.priority !== 'All' && h.priority !== filters.priority) return false;
     if (filters.channel !== 'All' && h.rec.channel !== filters.channel) return false;
-    if (filters.consent !== 'All' && h.consent !== filters.consent) return false;
     if (filters.trigger !== 'All' && h.signals[0].k !== filters.trigger) return false;
     return true;
   });
@@ -292,11 +289,6 @@ function AllRecommendations({ status, onOpen }) {
             {['All', 'F2F', 'Email', 'Phone', 'Virtual', '—'].map(c => <option key={c}>{c}</option>)}
           </select>
         </span>
-        <span className="ndc-sel">Consent
-          <select value={filters.consent} onChange={e => setFilters(f => ({ ...f, consent: e.target.value }))}>
-            <option>All</option><option>Granted</option><option>Denied</option><option>Unknown</option>
-          </select>
-        </span>
         <span className="ndc-sel">Top trigger
           <select value={filters.trigger} onChange={e => setFilters(f => ({ ...f, trigger: e.target.value }))}>
             <option value="All">All</option>
@@ -314,7 +306,7 @@ function AllRecommendations({ status, onOpen }) {
       <div className="ndc-tbl-wrap">
         <table className="ndc-tbl">
           <thead>
-            <tr><th>HCP</th><th>Why now</th><th>Recommendation</th><th>Channel</th><th>Consent</th><th>Priority</th><th style={{ textAlign: 'right' }}>Score</th><th>Status</th></tr>
+            <tr><th>HCP</th><th>Why now</th><th>Recommendation</th><th>Channel</th><th>Priority</th><th style={{ textAlign: 'right' }}>Score</th><th>Status</th></tr>
           </thead>
           <tbody>
             {rows.map(h => {
@@ -327,7 +319,6 @@ function AllRecommendations({ status, onOpen }) {
                   <td className="why">{SIGNAL_LABEL[s0.k]} {s0.disp}</td>
                   <td>{h.rec.type === 'Insight' ? <span className="why">Insight — no action</span> : h.rec.action}</td>
                   <td>{h.rec.channel}{blocked && <span className="ndc-chip crit" style={{ marginLeft: 4 }}>blocked</span>}</td>
-                  <td><ConsentChip h={h} /></td>
                   <td><PriorityChip h={h} /></td>
                   <td className="ndc-num" style={{ textAlign: 'right', fontWeight: 600 }}>{h.score}</td>
                   <td>{st ? <span className={`ndc-chip ${st.v === 'accepted' ? 'pos' : 'neu'}`}>{st.v}</span> : <span className="why">Open</span>}</td>
@@ -347,12 +338,12 @@ function HCPsTable({ onOpen }) {
   return (
     <div className="ndc-tbl-wrap">
       <table className="ndc-tbl">
-        <thead><tr><th>HCP</th><th>Organisation</th><th>Territory</th><th>Segment</th><th>State</th><th>Consent</th><th style={{ textAlign: 'right' }}>Last F2F</th></tr></thead>
+        <thead><tr><th>HCP</th><th>Organisation</th><th>Territory</th><th>Segment</th><th>State</th><th style={{ textAlign: 'right' }}>Last F2F</th></tr></thead>
         <tbody>
           {HCPS.map(h => (
             <tr key={h.id} onClick={() => onOpen(h.id)}>
               <td><b>{h.name}</b><div className="why">{h.spec}</div></td>
-              <td>{h.org}</td><td>{h.terr}</td><td>{h.seg}</td><td>{h.state}</td><td><ConsentChip h={h} /></td>
+              <td>{h.org}</td><td>{h.terr}</td><td>{h.seg}</td><td>{h.state}</td>
               <td className="ndc-num" style={{ textAlign: 'right', color: h.lastF2F > 45 ? 'var(--crit)' : undefined, fontWeight: h.lastF2F > 45 ? 600 : 400 }}>{h.lastF2F}d</td>
             </tr>
           ))}
@@ -370,7 +361,7 @@ function ChannelChart({ h }) {
   return (
     <div className="ndc-chart">
       <h3>Channel affinity</h3>
-      <span className="cap">How this HCP has responded, by channel, 0–100. A blocked channel is gated by consent — not by affinity.</span>
+      <span className="cap">How this HCP has responded, by channel, 0–100. A blocked channel isn't currently available for this HCP — not a reflection of affinity.</span>
       <div className="ndc-vbars">
         {CHANNEL_NAMES.map((n, i) => {
           const v = h.ch[i]; const blocked = consentBlocked(h, n);
@@ -515,7 +506,7 @@ function HcpDetail({ h, status, note, onNote, onAccept, onWhy, onBrief, onBack }
             <h2 style={{ fontSize: 21, letterSpacing: '-.02em' }}>{h.name}</h2>
             <div className="ndc-nba-meta">{h.spec} · {h.org} · {h.terr} · Tier {h.tier} · {h.seg}</div>
           </div>
-          <div className="ndc-nba-tags"><PriorityChip h={h} /><ConsentChip h={h} /><span className="ndc-chip acc">{h.state}</span></div>
+          <div className="ndc-nba-tags"><PriorityChip h={h} /><span className="ndc-chip acc">{h.state}</span></div>
         </div>
         <div style={{ borderTop: '1px solid var(--line)', padding: '11px 18px', display: 'flex', gap: 20, flexWrap: 'wrap' }}>
           <span className="ndc-note"><b style={{ color: 'var(--ink)' }}>Why</b> {h.stateNote}</span>

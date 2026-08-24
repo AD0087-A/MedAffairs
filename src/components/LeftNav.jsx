@@ -16,7 +16,7 @@ const NAV_ITEMS = [
   },
 ];
 
-export default function LeftNav({ activePage, activeSubPage, onNavigate }) {
+export default function LeftNav({ activePage, activeSubPage, onNavigate, mobileOpen }) {
   const [expandedKey, setExpandedKey] = useState(null);
 
   function handleItemClick(item) {
@@ -72,7 +72,7 @@ export default function LeftNav({ activePage, activeSubPage, onNavigate }) {
   }
 
   return (
-    <nav className="left-nav">
+    <nav className={`left-nav${mobileOpen ? ' mobile-open' : ''}`}>
       <div className="left-nav-logo">
         <span>🏠</span>
         <span>Improzo</span>

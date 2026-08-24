@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles, Bell } from 'lucide-react';
+import { Sparkles, Bell, Menu } from 'lucide-react';
 import LeftNav from './LeftNav';
 import KOLProfileCard from './KOLProfileCard';
 import Workspace from './Workspace';
@@ -27,10 +27,12 @@ export default function AppShell() {
   const [nbaView, setNbaView] = useState('command');
   const [workspaceTab, setWorkspaceTab] = useState('Meeting Prep');
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   function handleNavigate(page, sub) {
     setActivePage(page);
     if (page === 'nba-console' && sub) setNbaView(sub);
+    setMobileNavOpen(false);
   }
 
   function renderMainContent() {
@@ -84,10 +86,19 @@ export default function AppShell() {
         activePage={activePage}
         activeSubPage={activePage === 'nba-console' ? nbaView : null}
         onNavigate={handleNavigate}
+        mobileOpen={mobileNavOpen}
       />
+      {mobileNavOpen && <div className="mobile-nav-scrim" onClick={() => setMobileNavOpen(false)} />}
 
       <div className="app-shell-main">
         <header className="app-header">
+          <button
+            className="mobile-nav-toggle"
+            onClick={() => setMobileNavOpen(v => !v)}
+            aria-label="Toggle navigation"
+          >
+            <Menu size={20} />
+          </button>
           <span className="app-header-title">{pageTitle}</span>
           <input
             type="text"

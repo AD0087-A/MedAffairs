@@ -3921,6 +3921,31 @@
   font-weight: 600;
 }
 
+/* mobile nav — hidden above the breakpoint; below it, .left-nav goes
+   off-canvas (fixed, slid out) and the hamburger button toggles it as an
+   overlay with a scrim, instead of the fixed 250px sidebar permanently
+   eating most of a phone-width screen. */
+.mobile-nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: none;
+  border: none;
+  color: #334155;
+  flex-shrink: 0;
+}
+
+.mobile-nav-toggle:hover {
+  background: #f1f5f9;
+}
+
+.mobile-nav-scrim {
+  display: none;
+}
+
 .app-header {
   height: 52px;
   background: white;
@@ -3930,6 +3955,30 @@
   padding: 0 20px;
   gap: 12px;
   flex-shrink: 0;
+}
+
+@media (max-width: 880px) {
+  .mobile-nav-toggle { display: flex; }
+  .left-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+    transform: translateX(-100%);
+    transition: transform 0.2s ease;
+    box-shadow: 4px 0 24px rgba(0,0,0,0.2);
+  }
+  .left-nav.mobile-open {
+    transform: translateX(0);
+  }
+  .mobile-nav-scrim {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(15,23,42,0.45);
+    z-index: 90;
+  }
 }
 
 .app-header-title {
