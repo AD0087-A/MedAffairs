@@ -8,6 +8,8 @@ import ExecutiveInsights from './ExecutiveInsights';
 import AskIzoChat from './AskIzoChat';
 import HCPSegmentationPage from './pages/HCPSegmentationPage';
 import DynamicTargetingPage from './pages/DynamicTargetingPage';
+import NBAEnginePage from './pages/NBAEnginePage';
+import RepCallQueuePage from './pages/RepCallQueuePage';
 
 const WORKSPACE_TABS = ['Meeting Prep', 'Timeline', 'Library'];
 
@@ -17,6 +19,8 @@ const PAGE_LABELS = {
   executive: 'Executive Insights',
   'hcp-segmentation': 'HCP Segmentation and Targeting',
   targeting: 'Dynamic Targeting',
+  'nba-engine': 'NBA Engine',
+  'call-queue': 'My Call Queue',
 };
 
 export default function AppShell() {
@@ -52,6 +56,14 @@ export default function AppShell() {
 
     if (activePage === 'targeting') {
       return <DynamicTargetingPage />;
+    }
+
+    if (activePage === 'nba-engine') {
+      return <NBAEnginePage />;
+    }
+
+    if (activePage === 'call-queue') {
+      return <RepCallQueuePage />;
     }
 
     return (

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { User, Activity, BarChart2, Users, Target, ChevronDown } from 'lucide-react';
+import { User, Activity, BarChart2, Users, Target, Zap, ClipboardList, ChevronDown } from 'lucide-react';
 
 const NAV_ITEMS = [
   { key: 'brief', label: 'MSL Call Brief', icon: User },
@@ -7,6 +7,8 @@ const NAV_ITEMS = [
   { key: 'executive', label: 'Executive Insights', icon: BarChart2 },
   { key: 'hcp-segmentation', label: 'HCP Segmentation & Targeting', icon: Users },
   { key: 'targeting', label: 'Dynamic Targeting', icon: Target },
+  { key: 'nba-engine', label: 'NBA Engine', icon: Zap },
+  { key: 'call-queue', label: 'My Call Queue', icon: ClipboardList },
 ];
 
 export default function LeftNav({ activePage, onNavigate }) {
